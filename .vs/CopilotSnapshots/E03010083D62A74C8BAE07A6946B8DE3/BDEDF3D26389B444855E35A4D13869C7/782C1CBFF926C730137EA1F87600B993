@@ -1,0 +1,53 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+
+namespace SecurityOfIdenticons.Controllers
+{
+    public class IdenticonController : Controller
+    {
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult GenerateResult(string input, int resolution = 5, bool isSymmetric = true, int colorCount = 1, int saturation = 70, int lightness = 50)
+        {
+            // Debug: Log all received parameters
+            Debug.WriteLine($"=== RECEIVED PARAMETERS ===");
+            Debug.WriteLine($"input: {input}");
+            Debug.WriteLine($"resolution: {resolution}");
+            Debug.WriteLine($"isSymmetric: {isSymmetric}");
+            Debug.WriteLine($"colorCount: {colorCount}");
+            Debug.WriteLine($"saturation: {saturation}");
+            Debug.WriteLine($"lightness: {lightness}");
+
+            // Log all query string parameters
+            Debug.WriteLine($"=== ALL QUERY STRING PARAMS ===");
+            foreach (var key in Request.Query.Keys)
+            {
+                Debug.WriteLine($"{key} = {Request.Query[key]}");
+            }
+
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return Content("<div class='alert alert-warning text-center'>Enter an identifier to begin.</div>");
+            }
+
+            var parameters = new IdenticonParameters(resolution, isSymmetric, colorCount, saturation, lightness);
+            var generator = new IdenticonGenerator(parameters);
+            var result = generator.Generate(input);
+
+            Debug.WriteLine($"=== GENERATED RESULT ===");
+            Debug.WriteLine($"Grid length: {result.Grid.Length}");
+            Debug.WriteLine($"Colors count: {result.Colors?.Count ?? 0}");
+            Debug.WriteLine($"First 10 grid values: {string.Join(",", result.Grid.Take(10))}");
+
+            // Store parameters in ViewBag for display
+            ViewBag.Parameters = parameters;
+            ViewBag.Input = input;
+
+            return PartialView("_IdenticonResult", result);
+        }
+    }
+}

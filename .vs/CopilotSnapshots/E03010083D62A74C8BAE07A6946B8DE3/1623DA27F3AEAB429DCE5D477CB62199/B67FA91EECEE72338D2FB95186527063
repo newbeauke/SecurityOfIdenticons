@@ -1,0 +1,73 @@
+﻿@model SecurityOfIdenticons.IdenticonResult
+@{
+    var parameters = ViewBag.Parameters as SecurityOfIdenticons.IdenticonParameters;
+}
+
+<div class="card lab-card animate-fadeIn">
+    <div class="card-body p-4">
+        <div class="row align-items-center">
+
+            <!-- Grid -->
+            <div class="col-md-6 text-center mb-4 mb-md-0">
+                <div style="display: grid; grid-template-columns: repeat(@Model.Resolution, 1fr); gap: 1px; background: #dee2e6; border: 4px solid #212529; margin: 0 auto; width: fit-content;">
+                    @foreach (var colorIndex in Model.Grid)
+                    {
+                        string bgColor = "#f8f9fa";
+                        if (colorIndex > 0 && colorIndex <= Model.Colors.Count)
+                        {
+                            bgColor = Model.Colors[colorIndex - 1];
+                        }
+                        <div style="width: 40px; height: 40px; background-color: @bgColor;"></div>
+                    }
+                </div>
+                <div class="mt-2 small text-muted font-mono uppercase">Resolution: @(Model.Resolution)x@(Model.Resolution)</div>
+                @if (Model.Colors != null && Model.Colors.Count > 0)
+                {
+                    <div class="mt-2 d-flex justify-content-center gap-2">
+                        @for (int i = 0; i < Model.Colors.Count; i++)
+                        {
+                            <div style="width: 30px; height: 30px; background-color: @Model.Colors[i]; border: 2px solid #212529; border-radius: 4px;" title="Color @(i+1): @Model.Colors[i]"></div>
+                        }
+                    </div>
+                }
+            </div>
+
+            <!-- Data -->
+            <div class="col-md-6">
+                <h5 class="fw-bold border-bottom pb-2 mb-3 tracking-tight">Metrics</h5>
+                <div class="row g-3 font-mono">
+                    <div class="col-6">
+                        <div class="text-muted small uppercase">Entropy</div>
+                        <div class="fw-bold">@Model.EntropyBits bits</div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-muted small uppercase">Search Space</div>
+                        <div class="fw-bold">2^@Model.EntropyBits</div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-muted small uppercase">Color Mode</div>
+                        <div class="fw-bold">@(parameters.ColorCount == 0 ? "None" : parameters.ColorCount + " color" + (parameters.ColorCount > 1 ? "s" : ""))</div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-muted small uppercase">Grid Mode</div>
+                        <div class="fw-bold">@(parameters.IsSymmetric ? "Symmetric" : "Asymmetric")</div>
+                    </div>
+                    @if (parameters.ColorCount > 0)
+                    {
+                        <div class="col-6">
+                            <div class="text-muted small uppercase">Saturation</div>
+                            <div class="fw-bold">@parameters.Saturation%</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-muted small uppercase">Lightness</div>
+                            <div class="fw-bold">@parameters.Lightness%</div>
+                        </div>
+                    }
+                </div>
+                <div class="mt-4 p-3 bg-light rounded small italic text-secondary">
+                    A 1-bit change in the input hash shifts the @Model.Resolution-grid structure by approximately @((100.0 / Model.EntropyBits).ToString("F1"))%
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

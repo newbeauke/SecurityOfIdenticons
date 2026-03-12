@@ -1,0 +1,108 @@
+﻿@model SecurityOfIdenticons.IdenticonResult
+@{
+    var parameters = ViewBag.Parameters as SecurityOfIdenticons.IdenticonParameters;
+    var input = ViewBag.Input as string;
+}
+
+<!-- Debug Info -->
+<div class="alert alert-info small">
+    <strong>Debug:</strong> ColorCount=@parameters.ColorCount, IsSymmetric=@parameters.IsSymmetric, Colors=@(Model.Colors?.Count ?? 0), Sat=@parameters.Saturation%, Light=@parameters.Lightness%
+    <br/>
+    <strong>First 10 Grid Values:</strong> @string.Join(", ", Model.Grid.Take(10))
+    <br/>
+    <strong>Active Cells:</strong> @Model.Grid.Count(x => x > 0) / @Model.Grid.Length
+    @if (Model.Colors != null && Model.Colors.Count > 0)
+    {
+        <br/>
+        <strong>Colors:</strong> @string.Join(", ", Model.Colors)
+    }
+</div>
+
+<div class="card lab-card animate-fadeIn">
+    <div class="card-body p-4">
+        <div class="row align-items-center">
+            <!-- The Grid Visualization -->
+            <div class="col-md-6 text-center mb-4 mb-md-0">
+                <div style="display: grid; grid-template-columns: repeat(@Model.Resolution, 1fr); gap: 1px; background: #dee2e6; border: 4px solid #212529; margin: 0 auto; width: fit-content;">
+                    @{
+                        int cellNum = 0;
+                    }
+                    @foreach (var colorIndex in Model.Grid)
+                    {
+                        string bgColor = "#ffffff";
+                        string debugInfo = $"Cell {cellNum}: colorIndex={colorIndex}";
+
+                        if (Model.Colors != null)
+                        {
+                            debugInfo += $", Colors.Count={Model.Colors.Count}";
+
+                            if (colorIndex > 0 && colorIndex <= Model.Colors.Count)
+                            {
+                                bgColor = Model.Colors[colorIndex - 1];
+                                debugInfo += $", bgColor={bgColor}";
+                            }
+                            else
+                            {
+                                debugInfo += ", condition failed";
+                            }
+                        }
+                        else
+                        {
+                            debugInfo += ", Colors is NULL";
+                        }
+
+                        <div style="width: 40px; height: 40px; background-color: @bgColor;" title="@debugInfo"></div>
+                        cellNum++;
+                    }
+                </div>
+                <div class="mt-2 small text-muted font-mono uppercase">Render: @(Model.Resolution)x@(Model.Resolution)</div>
+                @if (Model.Colors != null && Model.Colors.Count > 0)
+                {
+                    <div class="mt-2 d-flex justify-content-center gap-2">
+                        @for (int i = 0; i < Model.Colors.Count; i++)
+                        {
+                            <div style="width: 30px; height: 30px; background-color: @Model.Colors[i]; border: 2px solid #212529; border-radius: 4px;" title="Color @(i+1): @Model.Colors[i]"></div>
+                        }
+                    </div>
+                }
+            </div>
+
+            <!-- Quantitative Data -->
+            <div class="col-md-6">
+                <h5 class="fw-bold border-bottom pb-2 mb-3 tracking-tight">SECURITY_METRICS</h5>
+                <div class="row g-3 font-mono">
+                    <div class="col-6">
+                        <div class="text-muted small uppercase">Entropy</div>
+                        <div class="fw-bold">@Model.EntropyBits bits</div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-muted small uppercase">Search Space</div>
+                        <div class="fw-bold">2^@Model.EntropyBits</div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-muted small uppercase">Color Mode</div>
+                        <div class="fw-bold">@(parameters.ColorCount == 0 ? "NONE" : parameters.ColorCount + " COLOR" + (parameters.ColorCount > 1 ? "S" : ""))</div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-muted small uppercase">Grid Mode</div>
+                        <div class="fw-bold text-primary">@(parameters.IsSymmetric ? "SYMMETRIC" : "VARIED")</div>
+                    </div>
+                    @if (parameters.ColorCount > 0)
+                    {
+                        <div class="col-6">
+                            <div class="text-muted small uppercase">Saturation</div>
+                            <div class="fw-bold">@parameters.Saturation%</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-muted small uppercase">Lightness</div>
+                            <div class="fw-bold">@parameters.Lightness%</div>
+                        </div>
+                    }
+                </div>
+                <div class="mt-4 p-3 bg-light rounded small italic text-secondary">
+                    "A 1-bit change in the input hash shifts the @Model.Resolution-grid structure by approximately @((100.0 / Model.EntropyBits).ToString("F1"))%."
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

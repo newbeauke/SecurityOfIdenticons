@@ -1,0 +1,86 @@
+﻿using System;
+using System.Security.Cryptography;
+using System.Text;
+
+namespace SecurityOfIdenticons
+{
+    public class IdenticonGenerator
+    {
+        private readonly int resolution;
+        private readonly bool isSymmetric;
+
+        public IdenticonGenerator(int resolution = 5, bool isSymmetric = true)
+        {
+            if (resolution < 3)
+                throw new ArgumentException("Resolution must be at least 3");
+
+            this.resolution = resolution;
+            this.isSymmetric = isSymmetric;
+        }
+
+        public IdenticonResult Generate(string input)
+        {
+            byte[] hash = ComputeHash(input);
+
+            int columnsToGenerate = isSymmetric ? (int)Math.Ceiling(resolution / 2.0) : resolution;
+            int totalBitsRequired = resolution * columnsToGenerate;
+
+            bool[] bits = ExtractBitsFromHash(hash, totalBitsRequired);
+            bool[] flatGrid = new bool[resolution * resolution];
+
+            for (int row = 0; row < resolution; row++)
+            {
+                for (int col = 0; col < columnsToGenerate; col++)
+                {
+                    bool value = bits[(row * columnsToGenerate + col) % bits.Length];
+                    flatGrid[row * resolution + col] = value;
+
+                    if (isSymmetric)
+                    {
+                        flatGrid[row * resolution + (resolution - 1 - col)] = value;
+                    }
+                }
+            }
+
+            return new IdenticonResult
+            {
+                FlatGrid = flatGrid,
+                Resolution = resolution,
+                EntropyBits = totalBitsRequired,
+                Hue = hash[0] * (360.0 / 255.0),
+                Input = input,
+                IsSymmetric = isSymmetric
+            };
+        }
+
+        private byte[] ComputeHash(string input)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                return sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+            }
+        }
+
+        private bool[] ExtractBitsFromHash(byte[] hash, int count)
+        {
+            bool[] bits = new bool[count];
+            for (int i = 0; i < count; i++)
+            {
+                int byteIdx = (i / 8) % hash.Length;
+                int bitIdx = i % 8;
+                bits[i] = (hash[byteIdx] & (1 << bitIdx)) != 0;
+            }
+            return bits;
+        }
+    }
+
+    public class IdenticonResult
+    {
+        public bool[] FlatGrid { get; set; }
+        public int Resolution { get; set; }
+        public int EntropyBits { get; set; }
+        public double Hue { get; set; }
+        public string Input { get; set; }
+        public bool IsSymmetric { get; set; }
+    }
+}

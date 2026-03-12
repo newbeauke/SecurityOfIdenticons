@@ -1,0 +1,184 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
+
+namespace SecurityOfIdenticons
+{
+    public class IdenticonGenerator
+    {
+        private readonly IdenticonParameters parameters;
+
+        public IdenticonGenerator(IdenticonParameters parameters)
+        {
+            if (parameters.Resolution < 3)
+                throw new ArgumentException("Resolution must be at least 3");
+
+            this.parameters = parameters;
+        }
+
+        public IdenticonResult Generate(string input)
+        {
+            byte[] hash = ComputeHash(input);
+
+            int columnsToGenerate = parameters.IsSymmetric ? (int)Math.Ceiling(parameters.Resolution / 2.0) : parameters.Resolution;
+            int totalBitsRequired = parameters.Resolution * columnsToGenerate;
+
+            bool[] bits = ExtractBitsFromHash(hash, totalBitsRequired);
+            int[] grid = new int[parameters.Resolution * parameters.Resolution];
+
+            int colorBitOffset = totalBitsRequired;
+
+            for (int row = 0; row < parameters.Resolution; row++)
+            {
+                for (int col = 0; col < columnsToGenerate; col++)
+                {
+                    int index = row * columnsToGenerate + col;
+                    bool isActive = bits[index % bits.Length];
+
+                    int colorIndex = 0;
+                    if (isActive)
+                    {
+                        if (parameters.ColorCount == 0)
+                        {
+                            // No color mode: mark as active but use default color
+                            colorIndex = 1;
+                        }
+                        else if (parameters.ColorCount == 1)
+                        {
+                            colorIndex = 1;
+                        }
+                        else
+                        {
+                            // Use hash to determine which color (1 to colorCount)
+                            int hashIndex = (colorBitOffset + index) / 8;
+                            int hashByte = hash[hashIndex % hash.Length];
+                            colorIndex = 1 + (hashByte % parameters.ColorCount);
+                        }
+                    }
+
+                    grid[row * parameters.Resolution + col] = colorIndex;
+
+                    if (parameters.IsSymmetric)
+                    {
+                        grid[row * parameters.Resolution + (parameters.Resolution - 1 - col)] = colorIndex;
+                    }
+                }
+            }
+
+            // Generate colors based on hash with guaranteed visual distinction
+            List<string> colors = new List<string>();
+            if (parameters.ColorCount > 0)
+            {
+                // Use first hash byte to determine starting hue
+                double baseHue = hash[0] * (360.0 / 255.0);
+
+                // Distribute colors evenly across the hue spectrum
+                double hueSpacing = 360.0 / parameters.ColorCount;
+
+                for (int i = 0; i < parameters.ColorCount; i++)
+                {
+                    // Each color is evenly spaced around the color wheel
+                    double hue = (baseHue + (i * hueSpacing)) % 360.0;
+
+                    // Use invariant culture to ensure period decimal separator
+                    string hueStr = hue.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+                    colors.Add($"hsl({hueStr}, {parameters.Saturation}%, {parameters.Lightness}%)");
+                }
+            }
+
+            int entropyBits = totalBitsRequired;
+            int colorEntropyBits = 0;
+            int paletteEntropyBits = 0;
+            int activeCount = 0;
+
+            // Count active cells
+            foreach (int cell in grid)
+            {
+                if (cell > 0) activeCount++;
+            }
+
+            // Add palette entropy (hue selection)
+            if (parameters.ColorCount > 0)
+            {
+                // hash[0] determines the base hue: 256 possibilities = 8 bits
+                paletteEntropyBits = 8;
+                entropyBits += paletteEntropyBits;
+            }
+
+            // Add color assignment entropy (for 2-3 colors)
+            if (parameters.ColorCount > 1)
+            {
+                colorEntropyBits = (int)(activeCount * Math.Log2(parameters.ColorCount));
+                entropyBits += colorEntropyBits;
+            }
+
+            return new IdenticonResult
+            {
+                Grid = grid,
+                Colors = colors,
+                Resolution = parameters.Resolution,
+                EntropyBits = entropyBits,
+                PatternEntropyBits = totalBitsRequired,
+                PaletteEntropyBits = paletteEntropyBits,
+                ColorEntropyBits = colorEntropyBits,
+                ActiveCellCount = activeCount
+            };
+        }
+
+        private byte[] ComputeHash(string input)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                return sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+            }
+        }
+
+        private bool[] ExtractBitsFromHash(byte[] hash, int count)
+        {
+            bool[] bits = new bool[count];
+            for (int i = 0; i < count; i++)
+            {
+                int byteIdx = (i / 8) % hash.Length;
+                int bitIdx = i % 8;
+                bits[i] = (hash[byteIdx] & (1 << bitIdx)) != 0;
+            }
+            return bits;
+        }
+    }
+
+    public class IdenticonParameters
+    {
+        public int Resolution { get; set; } = 5;
+        public bool IsSymmetric { get; set; } = true;
+        public int ColorCount { get; set; } = 1;
+        public int Saturation { get; set; } = 70;
+        public int Lightness { get; set; } = 50;
+
+        public IdenticonParameters()
+        {
+
+        }
+
+        public IdenticonParameters(int resolution, bool isSymmetric, int colorCount, int saturation, int lightness)
+        {
+            Resolution = resolution;
+            IsSymmetric = isSymmetric;
+            ColorCount = Math.Clamp(colorCount, 0, 3);
+            Saturation = Math.Clamp(saturation, 0, 100);
+            Lightness = Math.Clamp(lightness, 0, 100);
+        }
+    }
+
+    public class IdenticonResult
+    {
+        public int[] Grid { get; set; }
+        public List<string> Colors { get; set; }
+        public int Resolution { get; set; }
+        public int EntropyBits { get; set; }
+        public int PatternEntropyBits { get; set; }
+        public int PaletteEntropyBits { get; set; }
+        public int ColorEntropyBits { get; set; }
+        public int ActiveCellCount { get; set; }
+    }
+}

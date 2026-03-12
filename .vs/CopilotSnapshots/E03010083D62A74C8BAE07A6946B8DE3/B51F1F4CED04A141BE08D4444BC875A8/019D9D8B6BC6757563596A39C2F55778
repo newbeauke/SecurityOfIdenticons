@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cognicon</title>
+
+    <!-- Bootstrap & HTMX -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
+    <!-- CSS -->
+    <style>
+        .identicon-grid { display: grid; gap: 1px; background: #dee2e6; border: 4px solid #212529; }
+        .cell { width: 40px; height: 40px; }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <header class="mb-5 text-center">
+            <h1 class="display-4 fw-bold">Cognicon</h1>
+            <p class="text-muted">A work in progress secure-by-design identicon generator for the Security of Identicons research internship by Beau Janssen</p>
+        </header>
+
+        <!-- Inputs -->
+        <section class="card mb-4">
+            <div class="card-body">
+                <h5 class="fw-bold border-bottom pb-2 mb-3 tracking-tight">Input</h5>
+
+                <input name="input" id="userInput" type="text" placeholder="Enter identifier" value="Beau Janssen"
+                       hx-get="@Url.Action("GenerateResult", "Identicon")"
+                       hx-trigger="keyup changed delay:200ms"
+                       hx-target="#resultContainer"
+                       hx-include="#resSelect, #colorCountSelect, #satSlider, #lightSlider"
+                       hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'
+                       class="form-control mb-3">
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label small fw-semibold">Grid Size</label>
+                        <select name="resolution" id="resSelect"
+                                hx-get="@Url.Action("GenerateResult", "Identicon")"
+                                hx-trigger="change"
+                                hx-target="#resultContainer"
+                                hx-include="#userInput, #colorCountSelect, #satSlider, #lightSlider"
+                                hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'
+                                class="form-select">
+                            <option value="5">5x5 Grid</option>
+                            <option value="7">7x7 Grid</option>
+                            <option value="9">9x9 Grid</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label small fw-semibold">Color Count</label>
+                        <select name="colorCount" id="colorCountSelect"
+                                hx-get="@Url.Action("GenerateResult", "Identicon")"
+                                hx-trigger="change"
+                                hx-target="#resultContainer"
+                                hx-include="#userInput, #resSelect, #satSlider, #lightSlider"
+                                hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'
+                                class="form-select">
+                            <option value="0">No color</option>
+                            <option value="1" selected>1 color</option>
+                            <option value="2">2 colors</option>
+                            <option value="3">3 colors</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 d-flex align-items-end">
+                        <div class="form-check">
+                            <input name="isSymmetric" id="symToggle" type="checkbox" checked
+                                   hx-get="@Url.Action("GenerateResult", "Identicon")"
+                                   hx-trigger="change"
+                                   hx-target="#resultContainer"
+                                   hx-include="#userInput, #resSelect, #colorCountSelect, #satSlider, #lightSlider"
+                                   hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'
+                                   class="form-check-input">
+                            <label class="form-check-label fw-semibold" for="symToggle">Symmetric</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label for="satSlider" class="form-label small fw-semibold">Saturation: <span id="satValue">70</span>%</label>
+                        <input type="range" name="saturation" id="satSlider" min="0" max="100" value="70"
+                               hx-get="@Url.Action("GenerateResult", "Identicon")"
+                               hx-trigger="input changed delay:100ms"
+                               hx-target="#resultContainer"
+                               hx-include="#userInput, #resSelect, #colorCountSelect, #lightSlider"
+                               hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'
+                               class="form-range"
+                               oninput="document.getElementById('satValue').textContent = this.value">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="lightSlider" class="form-label small fw-semibold">Lightness: <span id="lightValue">50</span>%</label>
+                        <input type="range" name="lightness" id="lightSlider" min="0" max="100" value="50"
+                               hx-get="@Url.Action("GenerateResult", "Identicon")"
+                               hx-trigger="input changed delay:100ms"
+                               hx-target="#resultContainer"
+                               hx-include="#userInput, #resSelect, #colorCountSelect, #satSlider"
+                               hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'
+                               class="form-range"
+                               oninput="document.getElementById('lightValue').textContent = this.value">
+                    </div>
+                </div>
+
+                <button hx-get="@Url.Action("GenerateResult", "Identicon")"
+                        hx-target="#resultContainer"
+                        hx-include="#userInput, #resSelect, #colorCountSelect, #satSlider, #lightSlider"
+                        hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'
+                        class="btn btn-primary w-100">
+                    Refresh
+                </button>
+            </div>
+        </section>
+
+        <!-- Results -->
+        <div id="resultContainer"
+             hx-get="@Url.Action("GenerateResult", "Identicon")"
+             hx-trigger="load"
+             hx-include="#userInput, #resSelect, #colorCountSelect, #satSlider, #lightSlider"
+             hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'>
+            <div class="text-center text-muted py-5">Loading...</div>
+        </div>
+
+        <!-- How it works -->
+        <section class="card mt-4">
+            <div class="card-body">
+                <h5 class="fw-bold border-bottom pb-2 mb-3 tracking-tight">How it works</h5>
+
+                <ol class="mb-0">
+                    <li class="mb-3">
+                        <strong>Generate SHA-256 hash</strong>
+                        <p class="text-muted small mb-0">
+                            The input string (which in practice can be any unique identifier of a user's account. e.g. their email address) is hashed using SHA-256, producing a 32-byte (256-bit) array.
+                            <br><code>For example: [147, 203, 89, 12, 45, ...]</code>
+                        </p>
+                    </li>
+
+                    <li class="mb-3">
+                        <strong>Calculate grid dimensions</strong>
+                        <p class="text-muted small mb-0">
+                            <strong>Symmetric mode:</strong> Generate left half + middle column (i.e. 3 columns for 5x5), then mirror<br>
+                            <strong>Asymmetric mode:</strong> Generate all columns<br>
+                            <code>Bits needed = rows x columns</code>
+                        </p>
+                    </li>
+
+                    <li class="mb-3">
+                        <strong>Extract bits from hash</strong>
+                        <p class="text-muted small mb-0">
+                            Each bit determines if a cell is filled or empty (1 or 0).<br>
+                            These bits are extracted sequentially from the hash bytes:<br>
+                            <code>bit[i] = (hash[i/8] >> (i mod 8)) & 1</code><br>
+                            For example: Hash byte 147 (10010011 in binary) gets bits: [1,1,0,0,1,0,0,1]
+                        </p>
+                    </li>
+
+                    <li class="mb-3">
+                        <strong>Assign colors to filled cells</strong>
+                        <p class="text-muted small mb-0">
+                            <strong>No colors:</strong> All active cells = black (in practice this could be any color chosen by the developer to match the aesthetic of their app)<br>
+                            <strong>1 color:</strong> All active cells = same color<br>
+                            <strong>2-3 colors:</strong> Additional hash bytes determine which color each cell gets<br>
+                            <code>color = 1 + (hash[offset + index] mod colorCount)</code>
+                        </p>
+                    </li>
+
+                    <li class="mb-3">
+                        <strong>Mirror grid (if symmetric)</strong>
+                        <p class="text-muted small mb-0">
+                            The left half of the pattern is copied over and mirrored to the right half.
+                        </p>
+                    </li>
+
+                    <li class="mb-0">
+                        <strong>Generate color palette</strong>
+                        <p class="text-muted small mb-0">
+                            Colors are generated in HSL. HSL colors consist of a:<br />
+                            • Saturation: a prefined value between 0-100%. 70% is recommended to get nice looking colors.<br />
+                            • Lightness: another predefined value between 0-100%. 50% is recommended to get nice looking colors.<br />
+                            • Hue: a value between 0-360 on the 'color wheel', generated using <code>hash[0] x (360 / 255)</code> to determine the first color<br />
+                            <br />
+                            Multiple colors are evenly distributed around the color wheel for maximum visual distinction:<br>
+                            • 1 color: Single hue<br>
+                            • 2 colors: Opposite (180 degrees apart): e.g. red as the generated starting color would produce cyan as the second color.<br>
+                            • 3 colors: Triad (120 degrees apart)<br />
+                            This means that at the moment, the palette itself does <strong>not</strong> add any extra entropy. Only the assignment of a pixel to a color does.
+                        </p>
+                    </li>
+                </ol>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

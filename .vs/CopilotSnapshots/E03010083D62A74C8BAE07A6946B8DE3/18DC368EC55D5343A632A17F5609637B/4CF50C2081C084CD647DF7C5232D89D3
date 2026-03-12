@@ -1,0 +1,79 @@
+﻿@model SecurityOfIdenticons.IdenticonResult
+
+<!-- Debug Info -->
+<div class="alert alert-info small">
+    <strong>Debug:</strong> ColorCount=@Model.ColorCount, IsSymmetric=@Model.IsSymmetric, Colors=@(Model.Colors?.Count ?? 0), Sat=@Model.Saturation%, Light=@Model.Lightness%
+</div>
+
+<div class="card lab-card animate-fadeIn">
+    <div class="card-body p-4">
+        <div class="row align-items-center">
+            <!-- The Grid Visualization -->
+            <div class="col-md-6 text-center mb-4 mb-md-0">
+                <div style="display: grid; grid-template-columns: repeat(@Model.Resolution, 1fr); gap: 1px; background: #dee2e6; border: 4px solid #212529; margin: 0 auto; width: fit-content;">
+                    @{
+                        int cellIndex = 0;
+                    }
+                    @foreach (var active in Model.FlatGrid)
+                    {
+                        string bgColor = "#ffffff";
+                        if (active && Model.ColorCount > 0)
+                        {
+                            int colorIndex = cellIndex % Model.Colors.Count;
+                            bgColor = Model.Colors[colorIndex];
+                        }
+                        <div style="width: 40px; height: 40px; background-color: @bgColor;"></div>
+                        cellIndex++;
+                    }
+                </div>
+                <div class="mt-2 small text-muted font-mono uppercase">Render: @(Model.Resolution)x@(Model.Resolution)</div>
+                @if (Model.ColorCount > 0)
+                {
+                    <div class="mt-2 d-flex justify-content-center gap-2">
+                        @foreach (var color in Model.Colors)
+                        {
+                            <div style="width: 30px; height: 30px; background-color: @color; border: 2px solid #212529; border-radius: 4px;" title="@color"></div>
+                        }
+                    </div>
+                }
+            </div>
+
+            <!-- Quantitative Data -->
+            <div class="col-md-6">
+                <h5 class="fw-bold border-bottom pb-2 mb-3 tracking-tight">SECURITY_METRICS</h5>
+                <div class="row g-3 font-mono">
+                    <div class="col-6">
+                        <div class="text-muted small uppercase">Entropy</div>
+                        <div class="fw-bold">@Model.EntropyBits bits</div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-muted small uppercase">Search Space</div>
+                        <div class="fw-bold">2^@Model.EntropyBits</div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-muted small uppercase">Color Mode</div>
+                        <div class="fw-bold">@(Model.ColorCount == 0 ? "NONE" : Model.ColorCount + " COLOR" + (Model.ColorCount > 1 ? "S" : ""))</div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-muted small uppercase">Grid Mode</div>
+                        <div class="fw-bold text-primary">@(Model.IsSymmetric ? "SYMMETRIC" : "VARIED")</div>
+                    </div>
+                    @if (Model.ColorCount > 0)
+                    {
+                        <div class="col-6">
+                            <div class="text-muted small uppercase">Saturation</div>
+                            <div class="fw-bold">@Model.Saturation%</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-muted small uppercase">Lightness</div>
+                            <div class="fw-bold">@Model.Lightness%</div>
+                        </div>
+                    }
+                </div>
+                <div class="mt-4 p-3 bg-light rounded small italic text-secondary">
+                    "A 1-bit change in the input hash shifts the @Model.Resolution-grid structure by approximately @((100.0 / Model.EntropyBits).ToString("F1"))%."
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

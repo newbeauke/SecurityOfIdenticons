@@ -1,0 +1,26 @@
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace SecurityOfIdenticons.Controllers
+{
+    public class IdenticonController : Controller
+    {
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult GenerateResult(string input, int resolution = 5, bool isSymmetric = true, int colorCount = 1, int saturation = 70, int lightness = 50)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return Content("<div class='alert alert-warning text-center'>Enter an identifier to begin.</div>");
+            }
+
+            var generator = new IdenticonGenerator(resolution, isSymmetric, colorCount, saturation, lightness);
+            var result = generator.Generate(input);
+
+            return PartialView("_IdenticonResult", result);
+        }
+    }
+}
