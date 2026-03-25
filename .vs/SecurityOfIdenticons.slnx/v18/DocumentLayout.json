@@ -21,6 +21,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|c:\\users\\beauk\\source\\repos\\asp.net\\securityofidenticons\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|c:\\users\\beauk\\source\\repos\\asp.net\\securityofidenticons\\identicongenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|solutionrelative:identicongenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,11 +34,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IdenticonGenerator.cs",
+              "DocumentMoniker": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\IdenticonGenerator.cs",
+              "RelativeDocumentMoniker": "IdenticonGenerator.cs",
+              "ToolTip": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\IdenticonGenerator.cs",
+              "RelativeToolTip": "IdenticonGenerator.cs",
+              "ViewState": "AgIAACIBAAAAAAAAAABBwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-25T15:28:06.464Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -44,7 +61,7 @@
               "RelativeDocumentMoniker": "Views\\Identicon\\Index.cshtml",
               "ToolTip": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Identicon\\Index.cshtml",
               "RelativeToolTip": "Views\\Identicon\\Index.cshtml",
-              "ViewState": "AgIAAD4AAAAAAAAAAAAewGEAAACJAAAAAAAAAA==",
+              "ViewState": "AgIAAL0AAAAAAAAAAAAuwOkAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-03-12T12:31:52.758Z",
               "EditorCaption": ""
@@ -57,7 +74,7 @@
               "RelativeDocumentMoniker": "Controllers\\IdenticonController.cs",
               "ToolTip": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Controllers\\IdenticonController.cs",
               "RelativeToolTip": "Controllers\\IdenticonController.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAIBQwAQAAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAAB0AAAAAAAAAAABRwAQAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-12T12:27:40.521Z",
               "EditorCaption": ""
@@ -70,7 +87,7 @@
               "RelativeDocumentMoniker": "Views\\Identicon\\_IdenticonResult.cshtml",
               "ToolTip": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Identicon\\_IdenticonResult.cshtml",
               "RelativeToolTip": "Views\\Identicon\\_IdenticonResult.cshtml",
-              "ViewState": "AgIAAFcAAAAAAAAAAAAewGsAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAAF8AAAAAAAAAAAAIwG8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-03-12T12:33:01.923Z",
               "EditorCaption": ""

@@ -209,6 +209,9 @@ namespace SecurityOfIdenticons
 
             return new IdenticonResult
             {
+                Identifier = input, // pass the original input
+                HashHex = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant(),
+                HashBinary = string.Join("", hash.Select(b => Convert.ToString(b, 2).PadLeft(8, '0'))),
                 Grid = grid,
                 Colors = colors,
                 Resolution = parameters.Resolution,
@@ -282,5 +285,8 @@ namespace SecurityOfIdenticons
         public int ActiveCellCount { get; set; }
         public int PaletteOptions { get; set; }
         public string WarningMessage { get; set; }
+        public string HashHex { get; set; }
+        public string HashBinary { get; set; }
+        public string Identifier { get; set; }
     }
 }

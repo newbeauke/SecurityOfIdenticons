@@ -27,13 +27,28 @@
             <form id="identiconForm" class="card-body" onsubmit="event.preventDefault();">
                 <h5 class="fw-bold border-bottom pb-2 mb-3 tracking-tight">Input</h5>
 
-                <input name="input" id="userInput" type="text" placeholder="Enter identifier" value="Beau Janssen"
-                       hx-get="@Url.Action("GenerateResult", "Identicon")"
-                       hx-trigger="keyup changed delay:200ms"
-                       hx-target="#resultContainer"
-                       hx-include="#identiconForm"
-                       hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'
-                       class="form-control mb-3">
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold">Identifier 1</label>
+                        <input name="input1" id="userInput1" type="text" placeholder="Enter identifier 1" value="Beau Janssen"
+                               hx-get="@Url.Action("GenerateResult", "Identicon")"
+                               hx-trigger="keyup changed delay:200ms"
+                               hx-target="#resultContainer"
+                               hx-include="#identiconForm"
+                               hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'
+                               class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold">Identifier 2</label>
+                        <input name="input2" id="userInput2" type="text" placeholder="Enter identifier 2" value="Beau Janssen 2"
+                               hx-get="@Url.Action("GenerateResult", "Identicon")"
+                               hx-trigger="keyup changed delay:200ms"
+                               hx-target="#resultContainer"
+                               hx-include="#identiconForm"
+                               hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'
+                               class="form-control">
+                    </div>
+                </div>
 
                 <div class="row g-3 mb-3">
                     <div class="col-md-4">
