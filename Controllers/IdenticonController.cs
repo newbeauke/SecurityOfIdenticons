@@ -10,14 +10,14 @@ namespace SecurityOfIdenticons.Controllers
         }
 
         [HttpGet]
-        public IActionResult GenerateResult(string input, int resolution = 5, bool isSymmetric = true, int colorCount = 1, int saturation = 70, int lightness = 50)
+        public IActionResult GenerateResult(string input, int resolution = 5, bool isSymmetric = true, int colorCount = 1, int saturation = 70, int lightness = 50, int minHueDistance = 45, int hueSpacing = 45)
         {
             if (string.IsNullOrWhiteSpace(input))
             {
                 return Content("<div class='alert alert-warning text-center'>Identifier cannot be empty</div>");
             }
 
-            var parameters = new IdenticonParameters(resolution, isSymmetric, colorCount, saturation, lightness);
+            var parameters = new IdenticonParameters(resolution, isSymmetric, colorCount, saturation, lightness, minHueDistance, hueSpacing);
             var generator = new IdenticonGenerator(parameters);
             var result = generator.Generate(input);
 

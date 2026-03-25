@@ -4,10 +4,16 @@
 }
 
 <div class="card lab-card animate-fadeIn">
-    <div class="card-body p-4">
-        <div class="row align-items-center">
+<div class="card-body p-4">
+        @if (!string.IsNullOrEmpty(Model.WarningMessage))
+        {
+            <div class="alert @(Model.WarningMessage.StartsWith("Warning") ? "alert-warning" : "alert-info") text-center mb-4 small fw-semibold">
+                @Model.WarningMessage
+            </div>
+        }
+    <div class="row align-items-center">
 
-            <!-- Grid -->
+        <!-- Grid -->
             <div class="col-md-6 text-center mb-4 mb-md-0">
                 <div style="display: grid; grid-template-columns: repeat(@Model.Resolution, 1fr); margin: 0 auto; width: fit-content;">
                     @foreach (var colorIndex in Model.Grid)
@@ -49,7 +55,7 @@
                 <div class="row g-3 font-mono">
                     <div class="col-6">
                         <div class="text-muted small uppercase">Total Entropy</div>
-                        <div class="fw-bold">@Model.EntropyBits bits</div>
+                        <div class="fw-bold">~@Model.EntropyBits.ToString("F1") bits</div>
                     </div>
                     <div class="col-6">
                         <div class="text-muted small uppercase">Total Possibilities (Search Space)</div>
@@ -87,20 +93,27 @@
                         @if (parameters.ColorCount > 0)
                         {
                             <div class="d-flex justify-content-between mb-1">
-                                <span class="text-muted">Palette (256 hue values):</span>
-                                <span class="fw-bold">+@Model.PaletteEntropyBits bits</span>
+                                <span class="text-muted">Palette (@Model.PaletteOptions options, @(parameters.MinHueDistance)° apart):</span>
+                                <span class="fw-bold">+@Model.PaletteEntropyBits.ToString("F1") bits</span>
                             </div>
                         }
                         @if (parameters.ColorCount > 1)
                         {
                             <div class="d-flex justify-content-between mb-1">
-                                <span class="text-muted">Color assignment (@Model.ActiveCellCount cells × @parameters.ColorCount colors):</span>
-                                <span class="fw-bold">+@Model.ColorEntropyBits bits</span>
+                                <span class="text-muted">Color assignment (~@(Model.PatternEntropyBits / 2.0) avg active cells x @parameters.ColorCount colors):</span>
+                                @if (@parameters.ColorCount == 2)
+                                {
+                                    <span class="fw-bold">+@Model.ColorEntropyBits.ToString("F1") bits</span>
+                                }
+                                else
+                                {
+                                    <span class="fw-bold">+((@(Model.PatternEntropyBits / 2.0)) x log₂(@parameters.ColorCount)) bits</span>
+                                }
                             </div>
                         }
                         <div class="border-top border-secondary mt-2 pt-2 d-flex justify-content-between">
                             <span class="fw-bold">Total:</span>
-                            <span class="fw-bold">@Model.EntropyBits bits</span>
+                            <span class="fw-bold">~@Model.EntropyBits.ToString("F1") bits</span>
                         </div>
                     </div>
                 </div>

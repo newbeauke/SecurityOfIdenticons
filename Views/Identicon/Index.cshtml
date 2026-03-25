@@ -23,15 +23,15 @@
         </header>
 
         <!-- Inputs -->
-        <section class="card mb-4">
-            <div class="card-body">
+        <section class="card mb-4" id="generatorSection">
+            <form id="identiconForm" class="card-body" onsubmit="event.preventDefault();">
                 <h5 class="fw-bold border-bottom pb-2 mb-3 tracking-tight">Input</h5>
 
                 <input name="input" id="userInput" type="text" placeholder="Enter identifier" value="Beau Janssen"
                        hx-get="@Url.Action("GenerateResult", "Identicon")"
                        hx-trigger="keyup changed delay:200ms"
                        hx-target="#resultContainer"
-                       hx-include="#resSelect, #colorCountSelect, #satSlider, #lightSlider"
+                       hx-include="#identiconForm"
                        hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'
                        class="form-control mb-3">
 
@@ -42,7 +42,7 @@
                                 hx-get="@Url.Action("GenerateResult", "Identicon")"
                                 hx-trigger="change"
                                 hx-target="#resultContainer"
-                                hx-include="#userInput, #colorCountSelect, #satSlider, #lightSlider"
+                                hx-include="#identiconForm"
                                 hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'
                                 class="form-select">
                             <option value="5">5x5 Grid</option>
@@ -57,7 +57,7 @@
                                 hx-get="@Url.Action("GenerateResult", "Identicon")"
                                 hx-trigger="change"
                                 hx-target="#resultContainer"
-                                hx-include="#userInput, #resSelect, #satSlider, #lightSlider"
+                                hx-include="#identiconForm"
                                 hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'
                                 class="form-select">
                             <option value="0">No color</option>
@@ -73,7 +73,7 @@
                                    hx-get="@Url.Action("GenerateResult", "Identicon")"
                                    hx-trigger="change"
                                    hx-target="#resultContainer"
-                                   hx-include="#userInput, #resSelect, #colorCountSelect, #satSlider, #lightSlider"
+                                   hx-include="#identiconForm"
                                    hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'
                                    class="form-check-input">
                             <label class="form-check-label fw-semibold" for="symToggle">Symmetric</label>
@@ -82,46 +82,70 @@
                 </div>
 
                 <div class="row g-3 mb-3">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label for="satSlider" class="form-label small fw-semibold">Saturation: <span id="satValue">70</span>%</label>
                         <input type="range" name="saturation" id="satSlider" min="0" max="100" value="70"
                                hx-get="@Url.Action("GenerateResult", "Identicon")"
                                hx-trigger="input changed delay:100ms"
                                hx-target="#resultContainer"
-                               hx-include="#userInput, #resSelect, #colorCountSelect, #lightSlider"
+                               hx-include="#identiconForm"
                                hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'
                                class="form-range"
                                oninput="document.getElementById('satValue').textContent = this.value">
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label for="lightSlider" class="form-label small fw-semibold">Lightness: <span id="lightValue">50</span>%</label>
                         <input type="range" name="lightness" id="lightSlider" min="0" max="100" value="50"
                                hx-get="@Url.Action("GenerateResult", "Identicon")"
                                hx-trigger="input changed delay:100ms"
                                hx-target="#resultContainer"
-                               hx-include="#userInput, #resSelect, #colorCountSelect, #satSlider"
+                               hx-include="#identiconForm"
                                hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'
                                class="form-range"
                                oninput="document.getElementById('lightValue').textContent = this.value">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="hueDistSlider" class="form-label small fw-semibold">Hue Distance: <span id="hueDistValue">45</span>°</label>
+                        <input type="range" name="minHueDistance" id="hueDistSlider" min="1" max="360" value="45"
+                               hx-get="@Url.Action("GenerateResult", "Identicon")"
+                               hx-trigger="input changed delay:100ms"
+                               hx-target="#resultContainer"
+                               hx-include="#identiconForm"
+                               hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'
+                               class="form-range"
+                               oninput="document.getElementById('hueDistValue').textContent = this.value">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="hueSpacingSlider" class="form-label small fw-semibold">Color Spacing: <span id="hueSpacingValue">45</span>°</label>
+                        <input type="range" name="hueSpacing" id="hueSpacingSlider" min="0" max="180" value="45"
+                               hx-get="@Url.Action("GenerateResult", "Identicon")"
+                               hx-trigger="input changed delay:100ms"
+                               hx-target="#resultContainer"
+                               hx-include="#identiconForm"
+                               hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'
+                               class="form-range"
+                               oninput="document.getElementById('hueSpacingValue').textContent = this.value">
                     </div>
                 </div>
 
                 <button hx-get="@Url.Action("GenerateResult", "Identicon")"
                         hx-target="#resultContainer"
-                        hx-include="#userInput, #resSelect, #colorCountSelect, #satSlider, #lightSlider"
+                        hx-include="#identiconForm"
                         hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'
                         class="btn btn-primary w-100">
                     Refresh
                 </button>
-            </div>
+            </form>
         </section>
 
         <!-- Results -->
         <div id="resultContainer"
              hx-get="@Url.Action("GenerateResult", "Identicon")"
              hx-trigger="load"
-             hx-include="#userInput, #resSelect, #colorCountSelect, #satSlider, #lightSlider"
+             hx-include="#identiconForm"
              hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'>
             <div class="text-center text-muted py-5">Loading...</div>
         </div>
@@ -182,13 +206,9 @@
                             Colors are generated in HSL. HSL colors consist of a:<br />
                             • Saturation: a prefined value between 0-100%. 70% is recommended to get nice looking colors.<br />
                             • Lightness: another predefined value between 0-100%. 50% is recommended to get nice looking colors.<br />
-                            • Hue: a value between 0-360 on the 'color wheel', generated using <code>hash[0] x (360 / 255)</code> to determine the first color<br />
+                            • Hue: a value between 0-360 on the 'color wheel'.<br />
                             <br />
-                            Multiple colors are evenly distributed around the color wheel for maximum visual distinction:<br>
-                            • 1 color: Single hue<br>
-                            • 2 colors: Opposite (180 degrees apart): e.g. red as the generated starting color would produce cyan as the second color.<br>
-                            • 3 colors: Triad (120 degrees apart)<br />
-                            This means that at the moment, the palette itself does <strong>not</strong> add any extra entropy. Only the assignment of a pixel to a color does.
+                            Subsequent colors for multi-color identicons are randomly chosen from all available distinct buckets, maintaining a Minimum Color Spacing from all other chosen colors to guarantee maximal visual distinction!
                         </p>
                     </li>
                 </ol>
