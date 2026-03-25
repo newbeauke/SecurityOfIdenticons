@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "hB5wIW2X+zE=",
+  "dgSpecHash": "mkQeLZu2wtM=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj",
+  "projectFilePath": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Beau\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.3\\microsoft.aspnetcore.openapi.10.0.3.nupkg.sha512",
-    "C:\\Users\\Beau\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
+    "C:\\Users\\beauk\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.3\\microsoft.aspnetcore.openapi.10.0.3.nupkg.sha512",
+    "C:\\Users\\beauk\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
   ],
   "logs": []
 }

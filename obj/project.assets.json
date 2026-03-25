@@ -83,23 +83,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Beau\\.nuget\\packages\\": {},
+    "C:\\Users\\beauk\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj",
+      "projectUniqueName": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj",
       "projectName": "SecurityOfIdenticons",
-      "projectPath": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj",
-      "packagesPath": "C:\\Users\\Beau\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\obj\\",
+      "projectPath": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj",
+      "packagesPath": "C:\\Users\\beauk\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Beau\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\beauk\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -157,7 +157,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
