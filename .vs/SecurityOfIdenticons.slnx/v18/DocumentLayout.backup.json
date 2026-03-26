@@ -42,6 +42,19 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Identicon\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Identicon\\Index.cshtml",
+              "ToolTip": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Identicon\\Index.cshtml",
+              "RelativeToolTip": "Views\\Identicon\\Index.cshtml",
+              "ViewState": "AgIAAEkAAAAA0MzMzMwjwK0AAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-12T12:31:52.758Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 5,
               "Title": "IdenticonGenerator.cs",
               "DocumentMoniker": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\IdenticonGenerator.cs",
@@ -50,21 +63,7 @@
               "RelativeToolTip": "IdenticonGenerator.cs",
               "ViewState": "AgIAACIBAAAAAAAAAABBwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-25T15:28:06.464Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Identicon\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Identicon\\Index.cshtml",
-              "ToolTip": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Identicon\\Index.cshtml",
-              "RelativeToolTip": "Views\\Identicon\\Index.cshtml",
-              "ViewState": "AgIAAL0AAAAAAAAAAAAuwOkAAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-12T12:31:52.758Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-25T15:28:06.464Z"
             },
             {
               "$type": "Document",
@@ -76,8 +75,7 @@
               "RelativeToolTip": "Controllers\\IdenticonController.cs",
               "ViewState": "AgIAAB0AAAAAAAAAAABRwAQAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-12T12:27:40.521Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-12T12:27:40.521Z"
             },
             {
               "$type": "Document",
@@ -87,7 +85,7 @@
               "RelativeDocumentMoniker": "Views\\Identicon\\_IdenticonResult.cshtml",
               "ToolTip": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Identicon\\_IdenticonResult.cshtml",
               "RelativeToolTip": "Views\\Identicon\\_IdenticonResult.cshtml",
-              "ViewState": "AgIAAF8AAAAAAAAAAAAIwG8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAEMAAADgMDMzMzMrwEsAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-03-12T12:33:01.923Z",
               "EditorCaption": ""

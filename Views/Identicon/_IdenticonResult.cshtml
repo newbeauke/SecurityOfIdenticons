@@ -13,6 +13,7 @@
             </div>
         }
     <div class="row mb-5">
+
         <!-- Identicons -->
         @foreach (var result in Model)
         {
@@ -49,34 +50,34 @@
                 }
                 
                 <div class="mt-4 text-start font-mono small bg-light p-2 rounded" style="word-break: break-all;">
-                    <div class="text-muted text-uppercase mb-1" style="font-size: 0.7rem;">SHA-256 Hash (Hex)</div>
+                    <div class="text-muted text-uppercase mb-1" style="font-size: 0.7rem;">SHA-256 hash</div>
                     <div class="mb-2">@result.HashHex</div>
-                    <div class="text-muted text-uppercase mb-1" style="font-size: 0.7rem;">Hash (Binary)</div>
+                    <div class="text-muted text-uppercase mb-1" style="font-size: 0.7rem;">Binary</div>
                     <div>@result.HashBinary</div>
                 </div>
             </div>
         }
     </div>
 
-    <!-- Comparison Metrics Placeholder -->
+    <!-- Comparison metrics -->
     @if (Model.Count >= 2)
     {
         <div class="row mb-5">
             <div class="col-12">
                 <h5 class="fw-bold border-bottom pb-2 mb-3 tracking-tight">Comparison Metrics</h5>
-                <div class="p-4 bg-light rounded text-center text-muted fst-italic">
-                    Similarity, distance, and visual entropy comparisons will be added here.
+                <div class="p-4 bg-light rounded text-center text-muted">
+                    Soon!
                 </div>
             </div>
         </div>
     }
 
-    <!-- Shared Data -->
+    <!-- Generator metrircs -->
     @if (firstResult != null)
     {
         <div class="row">
             <div class="col-12">
-                <h5 class="fw-bold border-bottom pb-2 mb-3 tracking-tight">Shared Generation Metrics</h5>
+                <h5 class="fw-bold border-bottom pb-2 mb-3 tracking-tight">Generator Metrics</h5>
                 <div class="row g-3 font-mono">
                     <div class="col-md-3 col-6">
                         <div class="text-muted small uppercase">Total Entropy</div>
