@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SecurityOfIdenticons")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1b85dbf381ddeaf3594aefe947dd2a478dd8b2f1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4a02d32270d03c3a23b77a19bd2f48a97e718699")]
 [assembly: System.Reflection.AssemblyProductAttribute("SecurityOfIdenticons")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SecurityOfIdenticons")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
