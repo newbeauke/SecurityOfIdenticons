@@ -20,14 +20,27 @@ namespace SecurityOfIdenticons
         public IdenticonResult Generate(string input)
         {
             byte[] hash = ComputeHash(input);
+            return GenerateFromHash(hash, input);
+        }
+
+        public IdenticonResult GenerateFromHash(byte[] hash, string identifier)
+        {
+            var bitRoles = new List<HashBitRole>();
 
             int columnsToGenerate = parameters.IsSymmetric ? (int)Math.Ceiling(parameters.Resolution / 2.0) : parameters.Resolution;
             int totalBitsRequired = parameters.Resolution * columnsToGenerate;
 
+            // Bytes 0-15 (128 bits): Reserved for Shape
+            bitRoles.Add(new HashBitRole { StartBit = 0, BitLength = Math.Min(totalBitsRequired, 128), RoleName = "Shape", ColorHex = "#3b82f6" });
+
             bool[] bits = ExtractBitsFromHash(hash, totalBitsRequired);
             int[] grid = new int[parameters.Resolution * parameters.Resolution];
 
-            int colorBitOffset = totalBitsRequired;
+            // Bytes 24-31 (64 bits): Reserved for Color Mapping
+            if (parameters.ColorCount > 1)
+            {
+                bitRoles.Add(new HashBitRole { StartBit = 192, BitLength = 64, RoleName = "Color Mapping", ColorHex = "#f59e0b" });
+            }
 
             for (int row = 0; row < parameters.Resolution; row++)
             {
@@ -50,9 +63,8 @@ namespace SecurityOfIdenticons
                         }
                         else
                         {
-                            // Use hash to determine which color (1 to colorCount)
-                            int hashIndex = colorBitOffset + index;
-                            int hashByte = hash[hashIndex % hash.Length];
+                            // Use hash bytes 24-31 to determine which color (1 to colorCount)
+                            int hashByte = hash[24 + (index % 8)];
                             colorIndex = 1 + (hashByte % parameters.ColorCount);
                         }
                     }
@@ -74,12 +86,15 @@ namespace SecurityOfIdenticons
 
             if (parameters.ColorCount > 0)
             {
+                // Bytes 16-23 (64 bits): Reserved for Palette
+                bitRoles.Add(new HashBitRole { StartBit = 128, BitLength = parameters.ColorCount >= 3 ? 64 : 32, RoleName = "Palette", ColorHex = "#10b981" });
+
                 int bucketCount = (int)Math.Floor(360.0 / parameters.MinHueDistance);
                 if (bucketCount < 1)
                 {
                     bucketCount = 1;
                 }
-                
+
                 double md = parameters.MinHueDistance;
                 double sp = parameters.HueSpacing;
 
@@ -89,7 +104,7 @@ namespace SecurityOfIdenticons
                     return d >= sp;
                 }
 
-                uint hashVal = BitConverter.ToUInt32(hash, 0);
+                uint hashVal = BitConverter.ToUInt32(hash, 16); // Extract 4 bytes from byte 16
 
                 if (parameters.ColorCount == 1)
                 {
@@ -129,7 +144,7 @@ namespace SecurityOfIdenticons
                         int c2 = validC2[(int)((hashVal / bucketCount) % validC2.Count)];
                         double h2 = c2 * md;
 
-                        // Calculate the true count of possible permutations for accurately reporting entropy (O(N^2) max 129,600 simple iterations, very fast)
+                        // Calculate the true count of possible permutations for accurately reporting entropy (O(N^2) max 129.600 simple iterations, very fast)
                         int validTripletsForC1 = 0;
                         for (int i = 0; i < validC2.Count; i++)
                         {
@@ -146,8 +161,8 @@ namespace SecurityOfIdenticons
 
                         if (validC3.Count > 0)
                         {
-                            // Utilize the next bytes of the hash block so our pseudo-RNG remains distributed for the last color
-                            int c3 = validC3[(int)(BitConverter.ToUInt32(hash, 4) % validC3.Count)];
+                            // Utilize the next bytes (bytes 20-23) of the isolated palette block
+                            int c3 = validC3[(int)(BitConverter.ToUInt32(hash, 20) % validC3.Count)];
                             double h3 = c3 * md;
                             colors.Add($"hsl({h1.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)}, {parameters.Saturation}%, {parameters.Lightness}%)");
                             colors.Add($"hsl({h2.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)}, {parameters.Saturation}%, {parameters.Lightness}%)");
@@ -167,7 +182,7 @@ namespace SecurityOfIdenticons
                 if (paletteEntropyBuckets <= 1)
                 {
                     paletteEntropyBuckets = 1;
-                    if (colors.Count == 0) // fallback if nothing was valid
+                    if (colors.Count == 0) // Fallback if nothing was valid
                     {
                         for (int i=0; i<parameters.ColorCount; i++) colors.Add($"hsl(0, {parameters.Saturation}%, {parameters.Lightness}%)");
                     }
@@ -200,8 +215,7 @@ namespace SecurityOfIdenticons
             // Add color assignment entropy (for multiple colors)
             if (parameters.ColorCount > 1)
             {
-                // To display the total mathematically expected search space of the identicon system, 
-                // we treat the average generated active cells (50%) to be independent of the current hash output.
+                // To display the total mathematically expected search space of the identicon system, we treat the average generated active cells (50%) to be independent of the current hash output
                 double expectedActiveCells = totalBitsRequired / 2.0;
                 colorEntropyBits = expectedActiveCells * Math.Log2(parameters.ColorCount);
                 entropyBits += colorEntropyBits;
@@ -209,7 +223,7 @@ namespace SecurityOfIdenticons
 
             return new IdenticonResult
             {
-                Identifier = input, // pass the original input
+                Identifier = identifier,
                 HashHex = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant(),
                 HashBinary = string.Join("", hash.Select(b => Convert.ToString(b, 2).PadLeft(8, '0'))),
                 Grid = grid,
@@ -221,11 +235,12 @@ namespace SecurityOfIdenticons
                 ColorEntropyBits = colorEntropyBits,
                 ActiveCellCount = activeCount,
                 PaletteOptions = paletteEntropyBuckets,
-                WarningMessage = warningMsg
+                WarningMessage = warningMsg,
+                BitRoles = bitRoles
             };
         }
 
-        private byte[] ComputeHash(string input)
+        public byte[] ComputeHash(string input)
         {
             using (SHA256 sha256 = SHA256.Create())
             {
@@ -288,5 +303,14 @@ namespace SecurityOfIdenticons
         public string HashHex { get; set; }
         public string HashBinary { get; set; }
         public string Identifier { get; set; }
+        public List<HashBitRole> BitRoles { get; set; } = new List<HashBitRole>();
+    }
+
+    public class HashBitRole
+    {
+        public int StartBit { get; set; }
+        public int BitLength { get; set; }
+        public string RoleName { get; set; }
+        public string ColorHex { get; set; }
     }
 }
