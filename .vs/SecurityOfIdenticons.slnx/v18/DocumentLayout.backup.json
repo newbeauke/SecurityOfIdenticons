@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|c:\\users\\beau\\source\\repos\\asp.net\\securityofidenticons\\comparisonmetrics.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|solutionrelative:comparisonmetrics.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|c:\\users\\beau\\source\\repos\\asp.net\\securityofidenticons\\views\\identicon\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|solutionrelative:views\\identicon\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -39,19 +43,31 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "ComparisonMetrics.cs",
+              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\ComparisonMetrics.cs",
+              "RelativeDocumentMoniker": "ComparisonMetrics.cs",
+              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\ComparisonMetrics.cs",
+              "RelativeToolTip": "ComparisonMetrics.cs",
+              "ViewState": "AgIAAIEAAAAAAAAAAAAowJwAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T18:06:02.872Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Identicon\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Identicon\\Index.cshtml",
               "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Identicon\\Index.cshtml",
               "RelativeToolTip": "Views\\Identicon\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC8BAAAHAAAAAAAAAA==",
+              "ViewState": "AgIAACsAAAAAAAAAAAAvwCUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-12T12:31:52.758Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-12T12:31:52.758Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "IdenticonGenerator.cs",
               "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\IdenticonGenerator.cs",
               "RelativeDocumentMoniker": "IdenticonGenerator.cs",
@@ -59,38 +75,35 @@
               "RelativeToolTip": "IdenticonGenerator.cs",
               "ViewState": "AgIAAMcAAAAAAAAAAAAvwOMAAABQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-25T15:28:06.464Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-25T15:28:06.464Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "IdenticonController.cs",
               "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Controllers\\IdenticonController.cs",
               "RelativeDocumentMoniker": "Controllers\\IdenticonController.cs",
               "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Controllers\\IdenticonController.cs",
               "RelativeToolTip": "Controllers\\IdenticonController.cs",
-              "ViewState": "AgIAAI4AAAAAAAAAAAAAAAkBAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAIEAAAAAAAAAAABBwBoBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-12T12:27:40.521Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-12T12:27:40.521Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "_IdenticonResult.cshtml",
               "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Identicon\\_IdenticonResult.cshtml",
               "RelativeDocumentMoniker": "Views\\Identicon\\_IdenticonResult.cshtml",
               "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Identicon\\_IdenticonResult.cshtml",
               "RelativeToolTip": "Views\\Identicon\\_IdenticonResult.cshtml",
-              "ViewState": "AgIAAEIAAAAAAAAAAAAuwFoAAAB2AAAAAAAAAA==",
+              "ViewState": "AgIAAJYAAAAAAAAAAAAawIMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-12T12:33:01.923Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-12T12:33:01.923Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "Properties\\launchSettings.json",
@@ -98,12 +111,11 @@
               "RelativeToolTip": "Properties\\launchSettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-03-12T12:33:58.208Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-12T12:33:58.208Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",

@@ -179,73 +179,25 @@
     <!-- Comparison metrics -->
     @if (Model.Count >= 2)
     {
-        // 1. Hash Hamming Distance
-        int hammingDistance = 0;
-        string bin1 = Model[0].HashBinary;
-        string bin2 = Model[1].HashBinary;
-        int maxBits = 0;
-        if (!string.IsNullOrEmpty(bin1) && !string.IsNullOrEmpty(bin2))
-        {
-            int len = Math.Min(bin1.Length, bin2.Length);
-            maxBits = Math.Max(bin1.Length, bin2.Length);
-            for (int i = 0; i < len; i++)
-            {
-                if (bin1[i] != bin2[i])
-                {
-                    hammingDistance++;
-                }
-            }
-            hammingDistance += Math.Abs(bin1.Length - bin2.Length);
-        }
-
-        // 2. Grid Visual Differences
-        int totalCells = Model[0].Grid.Length;
-        int shapeDiff = 0;
-        int exactDiff = 0;
-
-        Func<IdenticonResult, int, string> getCellColor = (res, idx) =>
-        {
-            int cIdx = res.Grid[idx];
-            if (cIdx == 0) return "bg";
-            if (res.Colors != null && res.Colors.Count > 0 && cIdx <= res.Colors.Count) return res.Colors[cIdx - 1];
-            return "black";
-        };
-
-        if (Model[0].Grid != null && Model[1].Grid != null && Model[0].Grid.Length == Model[1].Grid.Length)
-        {
-            for (int i = 0; i < totalCells; i++)
-            {
-                bool active1 = Model[0].Grid[i] > 0;
-                bool active2 = Model[1].Grid[i] > 0;
-
-                if (active1 != active2) shapeDiff++;
-
-                string c1 = getCellColor(Model[0], i);
-                string c2 = getCellColor(Model[1], i);
-                if (c1 != c2) exactDiff++;
-            }
-        }
-
         <div class="row">
             <div class="col-12">
                 <h5 class="fw-bold border-bottom pb-2 mb-3 tracking-tight">Comparison Metrics</h5>
                 <div class="p-4 bg-light rounded font-mono">
                     <div class="row">
-                        <div class="col-md-4 mb-3 mb-md-0">
-                            <div class="text-muted small text-uppercase">Hamming Distance (Hash)</div>
-                            <div class="fw-bold fs-5">@hammingDistance / @maxBits bits</div>
-                            <div class="small text-muted">@((maxBits > 0 ? (hammingDistance / (double)maxBits * 100) : 0).ToString("F1"))% difference in raw hash bits</div>
-                        </div>
-                        <div class="col-md-4 mb-3 mb-md-0 border-start">
-                            <div class="text-muted small text-uppercase">Shape Difference (Grid)</div>
-                            <div class="fw-bold fs-5">@shapeDiff / @totalCells cells</div>
-                            <div class="small text-muted">@((totalCells > 0 ? (shapeDiff / (double)totalCells * 100) : 0).ToString("F1"))% difference in active shape cells</div>
-                        </div>
-                        <div class="col-md-4 border-start">
-                            <div class="text-muted small text-uppercase">Exact State (Grid + Color)</div>
-                            <div class="fw-bold fs-5">@exactDiff / @totalCells cells</div>
-                            <div class="small text-muted">@((totalCells > 0 ? (exactDiff / (double)totalCells * 100) : 0).ToString("F1"))% differences in exact cell color assignment</div>
-                        </div>
+                        @{
+                            var allMetrics = SecurityOfIdenticons.MetricRegistry.AllMetrics;
+                            int count = 0;
+                        }
+                        @foreach(var metric in allMetrics)
+                        {
+                            var metricResult = metric.Compare(Model[0], Model[1]);
+                            <div class="col-md-3 mb-3 mb-md-0 @(count > 0 ? "border-start" : "")">
+                                <div class="text-muted small text-uppercase">@metric.Name</div>
+                                <div class="fw-bold fs-5" style="white-space: nowrap">@metricResult.PrimaryText</div>
+                                <div class="small text-muted">@metricResult.SecondaryText</div>
+                            </div>
+                            count++;
+                        }
                     </div>
                 </div>
             </div>

@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Concurrent;
 
 namespace SecurityOfIdenticons.Controllers
 {
     public class IdenticonController : Controller
     {
+        private static readonly ConcurrentDictionary<string, List<(string Input, IdenticonResult Result)>> _birthdayPool = new();
+
         public IActionResult Index()
         {
             return View();
@@ -105,7 +108,7 @@ namespace SecurityOfIdenticons.Controllers
         }
 
         [HttpGet]
-        public IActionResult MineCollisionChunk(string input1, string matchType = "Shape", int startAttempt = 1, int batchSize = 25000, int resolution = 5, bool isSymmetric = true, int colorCount = 1, int saturation = 70, int lightness = 50, int minHueDistance = 45, int hueSpacing = 45)
+        public IActionResult MineCollisionChunk(string input1, string matchType = "Shape", double targetMatch = 90.0, int startAttempt = 1, int batchSize = 25000, int resolution = 5, bool isSymmetric = true, int colorCount = 1, int saturation = 70, int lightness = 50, int minHueDistance = 45, int hueSpacing = 45, string mineMode = "Target")
         {
             if (string.IsNullOrWhiteSpace(input1)) return Content("<div class='text-danger fw-bold text-center'>Provide Identifier 1</div>", "text/html");
 
@@ -117,13 +120,81 @@ namespace SecurityOfIdenticons.Controllers
             int maxAttempts = 2000000;
             int endAttempt = Math.Min(startAttempt + batchSize - 1, maxAttempts);
 
-            string[] baseColors = new string[baseResult.Grid.Length];
-            for (int g = 0; g < baseResult.Grid.Length; g++)
+            string targetMetricId = matchType == "ExactClone" ? "ShapeAndColor" : matchType;
+            double actualTargetMatch = matchType == "ExactClone" ? 1.0 : (targetMatch / 100.0);
+            var metric = MetricRegistry.Get(targetMetricId);
+
+            if (mineMode == "Any")
             {
-                int cIdx = baseResult.Grid[g];
-                if (cIdx == 0) baseColors[g] = "bg";
-                else if (baseResult.Colors != null && baseResult.Colors.Count > 0 && cIdx <= baseResult.Colors.Count) baseColors[g] = baseResult.Colors[cIdx - 1];
-                else baseColors[g] = "black";
+                string poolKey = $"{input1}_{matchType}_{targetMatch}_{resolution}_{isSymmetric}_{colorCount}_{saturation}_{lightness}_{minHueDistance}_{hueSpacing}";
+                if (startAttempt == 1) _birthdayPool[poolKey] = new List<(string Input, IdenticonResult Result)>();
+
+                var pool = _birthdayPool.ContainsKey(poolKey) ? _birthdayPool[poolKey] : new List<(string Input, IdenticonResult Result)>();
+
+                // Cap chunk size for Any Collision to prevent extreme HTMX timeouts due to exponential comparisons
+                int currentBatchSize = Math.Min(batchSize, 1500); 
+                int endAttemptAny = Math.Min(startAttempt + currentBatchSize - 1, maxAttempts);
+
+                for (int i = startAttempt; i <= endAttemptAny; i++)
+                {
+                    string testString = $"{input1}_{i}";
+                    var testResult = generator.Generate(testString);
+
+                    foreach (var past in pool)
+                    {
+                        var metricResult = metric.Compare(past.Result, testResult);
+                        if (metricResult.SimilarityPercentage >= actualTargetMatch)
+                        {
+                            _birthdayPool.TryRemove(poolKey, out _); // clean up
+
+                            string oobInput1 = $"<input name=\"input1\" type=\"text\" id=\"userInput1\" placeholder=\"Enter identifier 1\" value=\"{past.Input}\" hx-get=\"/Identicon/GenerateResult\" hx-trigger=\"keyup changed delay:200ms\" hx-target=\"#resultContainer\" hx-include=\"#identiconForm\" hx-vals='js:{{\"isSymmetric\": document.getElementById(\"symToggle\").checked}}' class=\"form-control\" hx-swap-oob=\"true\">";
+                            string oobInput2 = $"<input name=\"input2\" type=\"text\" id=\"userInput2\" placeholder=\"Enter identifier 2\" value=\"{testString}\" hx-get=\"/Identicon/GenerateResult\" hx-trigger=\"keyup changed delay:200ms, load\" hx-target=\"#resultContainer\" hx-include=\"#identiconForm\" hx-vals='js:{{\"isSymmetric\": document.getElementById(\"symToggle\").checked}}' class=\"form-control\" hx-swap-oob=\"true\">";
+
+                            return Content($@"
+                                <div class='text-center mb-3 mt-2'>
+                                    <div class='badge bg-success mb-2 p-2'>Birthday Collision Found!</div><br>
+                                    <div class='mb-2 small font-mono'><strong>{past.Input}</strong><br>==<br><strong>{testString}</strong></div>
+                                    <span class='font-mono small text-muted'>Attempts: {pool.Count:N0}</span><br>
+                                    Closing...
+                                </div>
+                                <script>
+                                    setTimeout(function() {{
+                                        var btn = document.querySelector('#minerModal .btn-outline-danger');
+                                        if (btn) btn.click();
+                                        else {{ var modalEl = document.getElementById('minerModal'); if(modalEl) bootstrap.Modal.getInstance(modalEl).hide(); }}
+                                    }}, 2500);
+                                </script>
+                                {oobInput1}
+                                {oobInput2}
+                            ", "text/html");
+                        }
+                    }
+                    pool.Add((testString, testResult));
+
+                    // Memory cap to prevent explosion 
+                    if (pool.Count > 50000) {
+                         _birthdayPool.TryRemove(poolKey, out _);
+                         return Content("<div class='text-danger text-center font-mono small'>Pool reached 50,000 limit. Terminating.</div>", "text/html");
+                    }
+                }
+
+                _birthdayPool[poolKey] = pool;
+
+                double pctAny = (pool.Count / 50000.0) * 100.0;
+                string tmQueryAny = targetMatch.ToString(System.Globalization.CultureInfo.InvariantCulture);
+
+                return Content($@"
+                    <div hx-get=""/Identicon/MineCollisionChunk?matchType={matchType}&targetMatch={tmQueryAny}&startAttempt={endAttemptAny + 1}&batchSize={batchSize}&mineMode=Any"" hx-trigger=""load"" hx-include=""#identiconForm"" hx-target=""#minerModalBody"">
+                        <div class='text-center mb-3'>
+                            <strong>Mining Any Collision (Birthday Attack)...</strong><br>
+                            Pool Size: {pool.Count:N0}<br>
+                            <span class='text-muted small'>{(pool.Count * currentBatchSize):N0} comparisons this chunk</span>
+                        </div>
+                        <div class='progress' style='height: 5px;'>
+                            <div class='progress-bar bg-warning' role='progressbar' style='width: {pctAny:F1}%'></div>
+                        </div>
+                    </div>
+                ", "text/html");
             }
 
             for (int i = startAttempt; i <= endAttempt; i++)
@@ -131,67 +202,12 @@ namespace SecurityOfIdenticons.Controllers
                 string testString = $"{input1}_{i}";
                 var testResult = generator.Generate(testString);
 
-                bool isMatch = false;
+                string targetMetricId2 = matchType == "ExactClone" ? "ShapeAndColor" : matchType;
+                double actualTargetMatch2 = matchType == "ExactClone" ? 1.0 : (targetMatch / 100.0);
+                var metric2 = MetricRegistry.Get(targetMetricId2);
 
-                if (matchType == "Shape")
-                {
-                    isMatch = true;
-                    for (int g = 0; g < baseResult.Grid.Length; g++)
-                    {
-                        if ((baseResult.Grid[g] > 0) != (testResult.Grid[g] > 0))
-                        {
-                            isMatch = false;
-                            break;
-                        }
-                    }
-                }
-                else if (matchType == "ColorAndShape")
-                {
-                    isMatch = true;
-                    for (int g = 0; g < baseResult.Grid.Length; g++)
-                    {
-                        if (baseResult.Grid[g] != testResult.Grid[g])
-                        {
-                            isMatch = false;
-                            break;
-                        }
-                    }
-                    if (isMatch && baseResult.Colors != null && testResult.Colors != null && baseResult.Colors.Count == testResult.Colors.Count)
-                    {
-                        for (int c=0; c < baseResult.Colors.Count; c++)
-                        {
-                            if (baseResult.Colors[c] != testResult.Colors[c])
-                            {
-                                isMatch = false;
-                                break;
-                            }
-                        }
-                    }
-                }
-                else if (matchType == "NearClone")
-                {
-                    int totalCells = baseResult.Grid.Length;
-                    int exactMatches = 0;
-
-                    for (int g = 0; g < totalCells; g++)
-                    {
-                        string c1 = baseColors[g];
-                        string c2 = "black";
-                        int cIdx = testResult.Grid[g];
-
-                        if (cIdx == 0) c2 = "bg";
-                        else if (testResult.Colors != null && testResult.Colors.Count > 0 && cIdx <= testResult.Colors.Count) c2 = testResult.Colors[cIdx - 1];
-
-                        if (c1 == c2) exactMatches++;
-                    }
-
-                    // Treat >= 90% cell match as a "Near Clone"
-                    double matchPercentage = (exactMatches / (double)totalCells);
-                    if (matchPercentage >= 0.90)
-                    {
-                        isMatch = true;
-                    }
-                }
+                var metricResult = metric2.Compare(baseResult, testResult);
+                bool isMatch = metricResult.SimilarityPercentage >= actualTargetMatch2;
 
                 if (isMatch)
                 {
@@ -248,10 +264,11 @@ namespace SecurityOfIdenticons.Controllers
 
             // Continue loop via HTMX load
             double pct = (endAttempt / (double)maxAttempts) * 100;
-            string matchLabel = matchType == "NearClone" ? "Near Clone (90%+)" : (matchType == "Shape" ? "Shape" : "Exact Clone");
+            string matchLabel = matchType == "Shape" ? "Shape" : (matchType == "ExactClone" ? "Exact Clone" : matchType);
+            string tmQuery = targetMatch.ToString(System.Globalization.CultureInfo.InvariantCulture);
 
             return Content($@"
-                <div hx-get=""/Identicon/MineCollisionChunk?matchType={matchType}&startAttempt={endAttempt + 1}&batchSize={batchSize}"" hx-trigger=""load"" hx-include=""#identiconForm"" hx-target=""#minerModalBody"">
+                <div hx-get=""/Identicon/MineCollisionChunk?matchType={matchType}&targetMatch={tmQuery}&startAttempt={endAttempt + 1}&batchSize={batchSize}"" hx-trigger=""load"" hx-include=""#identiconForm"" hx-target=""#minerModalBody"">
                     <div class='text-center mb-3'>
                         <strong>Mining {matchLabel}...</strong><br>
                         Attempt {endAttempt:N0} / {maxAttempts:N0}
