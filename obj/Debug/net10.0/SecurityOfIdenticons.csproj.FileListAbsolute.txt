@@ -72,3 +72,9 @@ C:\Users\beauk\source\repos\ASP.NET\SecurityOfIdenticons\obj\Debug\net10.0\Secur
 C:\Users\beauk\source\repos\ASP.NET\SecurityOfIdenticons\obj\Debug\net10.0\SecurityOfIdenticons.genruntimeconfig.cache
 C:\Users\beauk\source\repos\ASP.NET\SecurityOfIdenticons\obj\Debug\net10.0\ref\SecurityOfIdenticons.dll
 C:\Users\Beau\source\repos\ASP.NET\SecurityOfIdenticons\obj\Debug\net10.0\SecurityOfIdenticons.sourcelink.json
+C:\Users\Beau\source\repos\ASP.NET\SecurityOfIdenticons\bin\Debug\net10.0\DnsClient.dll
+C:\Users\Beau\source\repos\ASP.NET\SecurityOfIdenticons\bin\Debug\net10.0\MongoDB.Bson.dll
+C:\Users\Beau\source\repos\ASP.NET\SecurityOfIdenticons\bin\Debug\net10.0\MongoDB.Driver.dll
+C:\Users\Beau\source\repos\ASP.NET\SecurityOfIdenticons\bin\Debug\net10.0\SharpCompress.dll
+C:\Users\Beau\source\repos\ASP.NET\SecurityOfIdenticons\bin\Debug\net10.0\Snappier.dll
+C:\Users\Beau\source\repos\ASP.NET\SecurityOfIdenticons\bin\Debug\net10.0\ZstdSharp.dll

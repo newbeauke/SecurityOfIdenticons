@@ -1,0 +1,70 @@
+@model IEnumerable<SecurityOfIdenticons.Models.ExperimentResult>
+
+@{
+    ViewData["Title"] = "Experiment Results";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-2">
+        <a href="@Url.Action("Index", "Experiment")" class="btn btn-outline-primary btn-sm">&larr; Back to Experiment</a>
+    </div>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Experiment Results</h2>
+        <form action="@Url.Action("ClearResults", "Experiment")" method="post" onsubmit="return confirm('Are you sure you want to delete all results?');">
+            <button type="submit" class="btn btn-danger btn-sm">Clear All Results</button>
+        </form>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="alert alert-info">
+            <h5 class="alert-heading">Estimated Global Confusion Threshold: <strong>@(((double)ViewBag.GlobalThreshold).ToString("P1"))</strong></h5>
+            <p class="mb-0 small">Calculated using the average threshold of the stabilized trials. When the similarity is above this percentage, users are highly likely to be confused.</p>
+        </div>
+    }
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Threshold</th>
+                <th>Result</th>
+                <th>Guess</th>
+                <th>Correct</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var result in Model.OrderByDescending(x => x.Timestamp))
+            {
+                <tr>
+                    <td>@result.Timestamp.ToString("HH:mm:ss")</td>
+                    <td>@result.Threshold.ToString("P0")</td>
+                    <td>
+                        @if(result.GuessedCorrectly)
+                        {
+                            <span class="badge bg-success">Correct</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">False</span>
+                        }
+                    </td>
+                    <td>@(result.GuessedIndex >= 0 ? (result.GuessedIndex + 1).ToString() : "None")</td>
+                    <td>@(result.CorrectIndex >= 0 ? (result.CorrectIndex + 1).ToString() : "None")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

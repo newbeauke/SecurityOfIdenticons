@@ -1,0 +1,96 @@
+@model SecurityOfIdenticons.Models.ExperimentTrial
+
+@{
+    ViewData["Title"] = "Experiment";
+    Layout = null; // No global layout is defined
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Display Identicons at a more realistic small size (scaled down from original 40px cells) */
+        .identicon-container-small {
+            transform: scale(0.5);
+            transform-origin: center;
+            width: fit-content;
+            margin: -25% auto; /* negate scale bounding box */
+            pointer-events: none;
+        }
+
+    </style>
+</head>
+<body class="bg-light">
+
+    <div class="container mt-2">
+        <a href="@Url.Action("Index", "Identicon")" class="btn btn-outline-secondary btn-sm"> &larr; Back to Generator</a>
+        <a href="@Url.Action("Results", "Experiment")" class="btn btn-outline-info btn-sm ms-2">View Results</a>
+    </div>
+
+<div class="container text-center mt-5">
+    <h2>Visual Confusion Experiment</h2>
+    <p>Target Similarity Threshold: @Model.CurrentThreshold.ToString("P0")</p>
+
+    <!-- Phase 1: Target -->
+    <div id="target-phase">
+        <h4>Memorize your Identicon (Target)</h4>
+        <div class="my-5 identicon-container-small">
+            @await Html.PartialAsync("_Identicon", Model.Target)
+        </div>
+        <button id="btn-next" class="btn btn-primary mt-5">Ready (Hide Target)</button>
+    </div>
+
+    <!-- Distraction Phase -->
+    <div id="distraction-phase" style="display: none;" class="my-5 py-5">
+        <h4>What is 4 + 7?</h4>
+        <p class="text-muted">Wait for it...</p>
+    </div>
+
+    <!-- Phase 2: Lineup -->
+    <div id="lineup-phase" style="display: none;">
+        <h4>Which one is your Target?</h4>
+
+        <form action="@Url.Action("SubmitGuess", "Experiment")" method="post" class="mt-4">
+            <input type="hidden" name="trialId" value="@Model.TrialId" />
+            <input type="hidden" name="correctIndex" value="@Model.CorrectLineupIndex" />
+            <input type="hidden" name="threshold" value="@Model.CurrentThreshold.ToString(System.Globalization.CultureInfo.InvariantCulture)" />
+
+            <div class="row justify-content-center">
+                @for (int i = 0; i < Model.Lineup.Count; i++)
+                {
+                    <div class="col-auto mx-2" style="width: 15%;">
+                        <h5>Avatar @(i + 1)</h5>
+                        <div class="mb-5 identicon-container-small">
+                            @await Html.PartialAsync("_Identicon", Model.Lineup[i])
+                        </div>
+                        <button type="submit" name="guessedIndex" value="@i" class="btn btn-outline-primary btn-sm mt-3 w-100">Select @(i + 1)</button>
+                    </div>
+                }
+            </div>
+
+            <div class="mt-5">
+                <button type="submit" name="guessedIndex" value="-1" class="btn btn-outline-secondary">None of these are the Target</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    <script>
+        document.getElementById('btn-next').addEventListener('click', function () {
+            document.getElementById('target-phase').style.display = 'none';
+            document.getElementById('distraction-phase').style.display = 'block';
+
+            // Artificial delay (Cognitive masking / Distraction phase) before showing lineup
+            setTimeout(() => {
+                document.getElementById('distraction-phase').style.display = 'none';
+                document.getElementById('lineup-phase').style.display = 'block';
+            }, 3000); // 3 second delay
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+@model SecurityOfIdenticons.IdenticonResult
+
+<div class="identicon-grid" style="display: grid; grid-template-columns: repeat(@Model.Resolution, 1fr); margin: 0 auto; width: fit-content; background: #dee2e6; border: 4px solid #212529;">
+    @foreach (var colorIndex in Model.Grid)
+    {
+        string bgColor;
+        if (colorIndex == 0)
+        {
+            bgColor = "#dee2e6";
+        }
+        else if (Model.Colors != null && Model.Colors.Count > 0 && colorIndex <= Model.Colors.Count)
+        {
+            bgColor = Model.Colors[colorIndex - 1];
+        }
+        else
+        {
+            bgColor = "black";
+        }
+        <div class="cell" style="width: 40px; height: 40px; background-color: @bgColor;"></div>
+    }
+</div>
