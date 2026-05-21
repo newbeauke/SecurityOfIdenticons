@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,11 +17,15 @@
     </style>
 </head>
 <body class="bg-light">
-    <div class="container py-5">
+    <div class="container py-3">
         <header class="mb-5 text-center">
+            <div class="mb-3 text-center">
+                <a href="#" onclick="goToExperiment(); return false;" class="btn btn-primary btn-sm">Run Experiment with current Generator Settings</a>
+                <a href="@Url.Action("Results", "Experiment")" class="btn btn-outline-secondary btn-sm ms-2">Go to Experiment Results</a>
+            </div>
+
             <h1 class="display-4 fw-bold">Cognicon</h1>
             <p class="text-muted">A work in progress secure-by-design identicon generator for the Security of Identicons research internship by Beau Janssen</p>
-            <a href="@Url.Action("Index", "Experiment")" class="btn btn-outline-primary mt-2">Go to Experiment</a>
         </header>
 
         <!-- Inputs -->
@@ -334,5 +338,20 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function goToExperiment() {
+            const res = document.getElementById('resSelect').value;
+            const colorCount = document.getElementById('colorCountSelect').value;
+            const isSym = document.getElementById('symToggle').checked;
+            const sat = document.getElementById('satSlider').value;
+            const light = document.getElementById('lightSlider').value;
+            const hueDist = document.getElementById('hueDistSlider').value;
+            const hueSpace = document.getElementById('hueSpacingSlider').value;
+            
+            const url = `@Url.Action("Index", "Experiment")?resolution=${res}&colorCount=${colorCount}&isSymmetric=${isSym}&saturation=${sat}&lightness=${light}&minHueDistance=${hueDist}&hueSpacing=${hueSpace}`;
+            window.location.href = url;
+        }
+    </script>
 </body>
 </html>

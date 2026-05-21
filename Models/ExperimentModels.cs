@@ -12,6 +12,7 @@ namespace SecurityOfIdenticons.Models
         public IdenticonResult Target { get; set; }
         public List<IdenticonResult> Lineup { get; set; }
         public int CorrectLineupIndex { get; set; } // -1 if "None"
+        public IdenticonParameters Parameters { get; set; }
     }
 
     public class ExperimentResult
@@ -28,5 +29,7 @@ namespace SecurityOfIdenticons.Models
         public int GuessedIndex { get; set; }
         public int CorrectIndex { get; set; }
         public DateTime Timestamp { get; set; } = DateTime.UtcNow;
+
+        public IdenticonParameters Parameters { get; set; }
     }
 }

@@ -3,20 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|c:\\users\\beau\\source\\repos\\asp.net\\securityofidenticons\\services\\experimentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|solutionrelative:services\\experimentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|c:\\users\\beau\\source\\repos\\asp.net\\securityofidenticons\\controllers\\experimentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|solutionrelative:controllers\\experimentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|c:\\users\\beau\\source\\repos\\asp.net\\securityofidenticons\\views\\shared\\_identiconresult.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|solutionrelative:views\\shared\\_identiconresult.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|c:\\users\\beau\\source\\repos\\asp.net\\securityofidenticons\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|c:\\users\\beau\\source\\repos\\asp.net\\securityofidenticons\\views\\experiment\\results.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|solutionrelative:views\\experiment\\results.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|c:\\users\\beau\\source\\repos\\asp.net\\securityofidenticons\\views\\experiment\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -27,12 +15,28 @@
       "RelativeMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|solutionrelative:views\\identicon\\_identiconresult.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|c:\\users\\beau\\source\\repos\\asp.net\\securityofidenticons\\comparisonmetrics.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|solutionrelative:comparisonmetrics.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|c:\\users\\beau\\source\\repos\\asp.net\\securityofidenticons\\views\\identicon\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|solutionrelative:views\\identicon\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|c:\\users\\beau\\source\\repos\\asp.net\\securityofidenticons\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|c:\\users\\beau\\source\\repos\\asp.net\\securityofidenticons\\controllers\\experimentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|solutionrelative:controllers\\experimentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|c:\\users\\beau\\source\\repos\\asp.net\\securityofidenticons\\services\\experimentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|solutionrelative:services\\experimentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|c:\\users\\beau\\source\\repos\\asp.net\\securityofidenticons\\views\\shared\\_identiconresult.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|solutionrelative:views\\shared\\_identiconresult.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|c:\\users\\beau\\source\\repos\\asp.net\\securityofidenticons\\comparisonmetrics.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|solutionrelative:comparisonmetrics.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|c:\\users\\beau\\source\\repos\\asp.net\\securityofidenticons\\controllers\\identiconcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -51,10 +55,6 @@
       "RelativeMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|solutionrelative:models\\experimentmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|c:\\users\\beau\\source\\repos\\asp.net\\securityofidenticons\\views\\experiment\\results.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|solutionrelative:views\\experiment\\results.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|c:\\users\\beau\\source\\repos\\asp.net\\securityofidenticons\\views\\shared\\_identicon.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{19CCA2EB-C158-FD55-5278-68F2D4854D75}|SecurityOfIdenticons.csproj|solutionrelative:views\\shared\\_identicon.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
@@ -66,11 +66,138 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ExperimentService.cs",
+              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Services\\ExperimentService.cs",
+              "RelativeDocumentMoniker": "Services\\ExperimentService.cs",
+              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Services\\ExperimentService.cs",
+              "RelativeToolTip": "Services\\ExperimentService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:17:54.028Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ExperimentModels.cs",
+              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Models\\ExperimentModels.cs",
+              "RelativeDocumentMoniker": "Models\\ExperimentModels.cs",
+              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Models\\ExperimentModels.cs",
+              "RelativeToolTip": "Models\\ExperimentModels.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAIBJwCAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:17:46.323Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ComparisonMetrics.cs",
+              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\ComparisonMetrics.cs",
+              "RelativeDocumentMoniker": "ComparisonMetrics.cs",
+              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\ComparisonMetrics.cs",
+              "RelativeToolTip": "ComparisonMetrics.cs",
+              "ViewState": "AgIAAIEAAAAAAAAAAAAowJgAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T18:06:02.872Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Identicon\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Identicon\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Identicon\\Index.cshtml",
+              "RelativeToolTip": "Views\\Identicon\\Index.cshtml",
+              "ViewState": "AgIAAEEBAAAAAAAAAAAAABoAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-12T12:31:52.758Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "IdenticonGenerator.cs",
+              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\IdenticonGenerator.cs",
+              "RelativeDocumentMoniker": "IdenticonGenerator.cs",
+              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\IdenticonGenerator.cs",
+              "RelativeToolTip": "IdenticonGenerator.cs",
+              "ViewState": "AgIAAMcAAAAAAAAAAAAvwOMAAABQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-25T15:28:06.464Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "_IdenticonResult.cshtml",
+              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Identicon\\_IdenticonResult.cshtml",
+              "RelativeDocumentMoniker": "Views\\Identicon\\_IdenticonResult.cshtml",
+              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Identicon\\_IdenticonResult.cshtml",
+              "RelativeToolTip": "Views\\Identicon\\_IdenticonResult.cshtml",
+              "ViewState": "AgIAAKIAAAAAAAAAAAAawMMAAAB1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-12T12:33:01.923Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAvwBcAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-12T12:26:44.674Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Results.cshtml",
+              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Experiment\\Results.cshtml",
+              "RelativeDocumentMoniker": "Views\\Experiment\\Results.cshtml",
+              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Experiment\\Results.cshtml",
+              "RelativeToolTip": "Views\\Experiment\\Results.cshtml",
+              "ViewState": "AgIAABoAAAAAAAAAAAAAADsAAACTAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-07T17:18:18.504Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Experiment\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Experiment\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Experiment\\Index.cshtml",
+              "RelativeToolTip": "Views\\Experiment\\Index.cshtml",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACMAAAB5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-07T17:18:12.787Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ExperimentController.cs",
+              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Controllers\\ExperimentController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ExperimentController.cs",
+              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Controllers\\ExperimentController.cs",
+              "RelativeToolTip": "Controllers\\ExperimentController.cs",
+              "ViewState": "AgIAANQAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:18:02.526Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -82,116 +209,11 @@
               "RelativeToolTip": "Views\\Shared\\_Identicon.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-07T17:39:53.671Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ExperimentController.cs",
-              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Controllers\\ExperimentController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ExperimentController.cs",
-              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Controllers\\ExperimentController.cs",
-              "RelativeToolTip": "Controllers\\ExperimentController.cs",
-              "ViewState": "AgIAADgAAAAAAAAAAAArwB4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-07T17:18:02.526Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ExperimentService.cs",
-              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Services\\ExperimentService.cs",
-              "RelativeDocumentMoniker": "Services\\ExperimentService.cs",
-              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Services\\ExperimentService.cs",
-              "RelativeToolTip": "Services\\ExperimentService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-07T17:17:54.028Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "ExperimentModels.cs",
-              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Models\\ExperimentModels.cs",
-              "RelativeDocumentMoniker": "Models\\ExperimentModels.cs",
-              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Models\\ExperimentModels.cs",
-              "RelativeToolTip": "Models\\ExperimentModels.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAIBJwCAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-07T17:17:46.323Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ComparisonMetrics.cs",
-              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\ComparisonMetrics.cs",
-              "RelativeDocumentMoniker": "ComparisonMetrics.cs",
-              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\ComparisonMetrics.cs",
-              "RelativeToolTip": "ComparisonMetrics.cs",
-              "ViewState": "AgIAAIEAAAAAAAAAAAAowJgAAAA3AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-23T18:06:02.872Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Identicon\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Identicon\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Identicon\\Index.cshtml",
-              "RelativeToolTip": "Views\\Identicon\\Index.cshtml",
-              "ViewState": "AgIAABYAAAAAAAAAAIBJwCYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-12T12:31:52.758Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-07T17:39:53.671Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "IdenticonGenerator.cs",
-              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\IdenticonGenerator.cs",
-              "RelativeDocumentMoniker": "IdenticonGenerator.cs",
-              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\IdenticonGenerator.cs",
-              "RelativeToolTip": "IdenticonGenerator.cs",
-              "ViewState": "AgIAAMcAAAAAAAAAAAAvwOMAAABQAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-25T15:28:06.464Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "_IdenticonResult.cshtml",
-              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Identicon\\_IdenticonResult.cshtml",
-              "RelativeDocumentMoniker": "Views\\Identicon\\_IdenticonResult.cshtml",
-              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Identicon\\_IdenticonResult.cshtml",
-              "RelativeToolTip": "Views\\Identicon\\_IdenticonResult.cshtml",
-              "ViewState": "AgIAAJYAAAAAAAAAAAAawKwAAACsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-12T12:33:01.923Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Results.cshtml",
-              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Experiment\\Results.cshtml",
-              "RelativeDocumentMoniker": "Views\\Experiment\\Results.cshtml",
-              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Experiment\\Results.cshtml",
-              "RelativeToolTip": "Views\\Experiment\\Results.cshtml",
-              "ViewState": "AgIAABUAAAAAAAAAAIBJwEYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-07T17:18:18.504Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
               "Title": "IdenticonController.cs",
               "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Controllers\\IdenticonController.cs",
               "RelativeDocumentMoniker": "Controllers\\IdenticonController.cs",
@@ -199,12 +221,11 @@
               "RelativeToolTip": "Controllers\\IdenticonController.cs",
               "ViewState": "AgIAAH4AAAAAAAAAAEBVwBoBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-12T12:27:40.521Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-12T12:27:40.521Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "Properties\\launchSettings.json",
@@ -212,25 +233,11 @@
               "RelativeToolTip": "Properties\\launchSettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-03-12T12:33:58.208Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-12T12:33:58.208Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAA8AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-12T12:26:44.674Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "_IdenticonResult.cshtml",
               "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Shared\\_IdenticonResult.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_IdenticonResult.cshtml",
@@ -238,21 +245,7 @@
               "RelativeToolTip": "Views\\Shared\\_IdenticonResult.cshtml",
               "ViewState": "AgIAABgAAAAAAAAAAAAvwGQAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-07T17:28:13.606Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Experiment\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Experiment\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\Views\\Experiment\\Index.cshtml",
-              "RelativeToolTip": "Views\\Experiment\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD8AAAA9AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-07T17:18:12.787Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-07T17:28:13.606Z"
             }
           ]
         }
