@@ -1,4 +1,4 @@
-﻿@model List<IdenticonResult>
+@model List<IdenticonResult>
 @using SecurityOfIdenticons
 @{
     var parameters = ViewBag.Parameters as IdenticonParameters;
@@ -122,12 +122,16 @@
             <div class="col-12">
                 <h5 class="fw-bold border-bottom pb-2 mb-3 tracking-tight">Generator Metrics</h5>
                 <div class="row g-3 font-mono">
-                    <div class="col-md-3 col-6">
+                    <div class="col-md-auto col-6">
                         <div class="text-muted small uppercase">Total Entropy</div>
                         <div class="fw-bold">~@firstResult.EntropyBits.ToString("F1") bits</div>
                     </div>
-                    <div class="col-md-3 col-6">
-                        <div class="text-muted small uppercase">Search Space</div>
+                    <div class="col-md-auto col-6">
+                        <div class="text-muted small uppercase">Raw Search Space</div>
+                        <div class="fw-bold text-muted">@(Math.Pow(2, firstResult.RawShapeEntropyBits + firstResult.RawColorEntropyBits).ToString("N0"))</div>
+                    </div>
+                    <div class="col-md-auto col-6">
+                        <div class="text-muted small uppercase">Safe Search Space</div>
                         <div class="fw-bold">@(Math.Pow(2, firstResult.EntropyBits).ToString("N0"))</div>
                     </div>
                     <div class="col-md-3 col-6">

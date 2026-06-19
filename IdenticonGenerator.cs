@@ -1,10 +1,17 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace SecurityOfIdenticons
 {
+    public enum SecurityLevel
+    {
+        None,
+        Level1,
+        Level2
+    }
+
     public class IdenticonGenerator
     {
         private readonly IdenticonParameters parameters;
@@ -34,12 +41,52 @@ namespace SecurityOfIdenticons
             bitRoles.Add(new HashBitRole { StartBit = 0, BitLength = Math.Min(totalBitsRequired, 128), RoleName = "Shape", ColorHex = "#3b82f6" });
 
             bool[] bits = ExtractBitsFromHash(hash, totalBitsRequired);
+
+            int shapeConstraintBits = 0;
+            if (parameters.ShapeSecurityLevel == SecurityLevel.Level1) shapeConstraintBits = 1;
+            else if (parameters.ShapeSecurityLevel == SecurityLevel.Level2) shapeConstraintBits = parameters.Resolution + columnsToGenerate - 1;
+            
+            ApplyShapeConstraints(bits, parameters.Resolution, columnsToGenerate, parameters.ShapeSecurityLevel);
+
             int[] grid = new int[parameters.Resolution * parameters.Resolution];
 
             // Bytes 24-31 (64 bits): Reserved for Color Mapping
             if (parameters.ColorCount > 1)
             {
                 bitRoles.Add(new HashBitRole { StartBit = 192, BitLength = 64, RoleName = "Color Mapping", ColorHex = "#f59e0b" });
+            }
+
+            List<int> activeIndependentIndices = new List<int>();
+            for (int row = 0; row < parameters.Resolution; row++)
+            {
+                for (int col = 0; col < columnsToGenerate; col++)
+                {
+                    int index = row * columnsToGenerate + col;
+                    if (bits[index % bits.Length]) {
+                        activeIndependentIndices.Add(index);
+                    }
+                }
+            }
+
+            Dictionary<int, int> independentColorMapping = new Dictionary<int, int>();
+
+            if (parameters.ColorCount > 1 && activeIndependentIndices.Count > 0)
+            {
+                int sumColorIndices = 0;
+                for (int i = 0; i < activeIndependentIndices.Count; i++)
+                {
+                    int index = activeIndependentIndices[i];
+                    int hashByte = hash[24 + (index % 8)];
+                    int colorVal = hashByte % parameters.ColorCount;
+                    
+                    if (parameters.ColorSecurityLevel == SecurityLevel.Level1 && i == activeIndependentIndices.Count - 1 && activeIndependentIndices.Count > 1)
+                    {
+                        colorVal = (parameters.ColorCount - (sumColorIndices % parameters.ColorCount)) % parameters.ColorCount;
+                    }
+
+                    sumColorIndices += colorVal;
+                    independentColorMapping[index] = colorVal + 1; // 1-based index
+                }
             }
 
             for (int row = 0; row < parameters.Resolution; row++)
@@ -52,20 +99,13 @@ namespace SecurityOfIdenticons
                     int colorIndex = 0;
                     if (isActive)
                     {
-                        if (parameters.ColorCount == 0)
-                        {
-                            // No color mode: mark as active but use default color
-                            colorIndex = 1;
-                        }
-                        else if (parameters.ColorCount == 1)
+                        if (parameters.ColorCount <= 1)
                         {
                             colorIndex = 1;
                         }
                         else
                         {
-                            // Use hash bytes 24-31 to determine which color (1 to colorCount)
-                            int hashByte = hash[24 + (index % 8)];
-                            colorIndex = 1 + (hashByte % parameters.ColorCount);
+                            colorIndex = independentColorMapping[index];
                         }
                     }
 
@@ -196,7 +236,8 @@ namespace SecurityOfIdenticons
                 paletteEntropyBits = Math.Log2(paletteEntropyBuckets);
             }
 
-            double entropyBits = totalBitsRequired;
+            int patternDataBits = totalBitsRequired - shapeConstraintBits;
+            double entropyBits = patternDataBits;
             double colorEntropyBits = 0;
             int activeCount = 0;
 
@@ -215,9 +256,11 @@ namespace SecurityOfIdenticons
             // Add color assignment entropy (for multiple colors)
             if (parameters.ColorCount > 1)
             {
-                // To display the total mathematically expected search space of the identicon system, we treat the average generated active cells (50%) to be independent of the current hash output
                 double expectedActiveCells = totalBitsRequired / 2.0;
-                colorEntropyBits = expectedActiveCells * Math.Log2(parameters.ColorCount);
+                double rawExpectedColorEntropy = expectedActiveCells * Math.Log2(parameters.ColorCount);
+                double expectedColorConstraint = (parameters.ColorSecurityLevel == SecurityLevel.Level1) ? Math.Log2(parameters.ColorCount) : 0;
+                
+                colorEntropyBits = rawExpectedColorEntropy - expectedColorConstraint;
                 entropyBits += colorEntropyBits;
             }
 
@@ -230,13 +273,17 @@ namespace SecurityOfIdenticons
                 Colors = colors,
                 Resolution = parameters.Resolution,
                 EntropyBits = entropyBits,
-                PatternEntropyBits = totalBitsRequired,
+                PatternEntropyBits = patternDataBits,
                 PaletteEntropyBits = paletteEntropyBits,
                 ColorEntropyBits = colorEntropyBits,
                 ActiveCellCount = activeCount,
                 PaletteOptions = paletteEntropyBuckets,
                 WarningMessage = warningMsg,
-                BitRoles = bitRoles
+                BitRoles = bitRoles,
+                ShapeConstraintBits = shapeConstraintBits,
+                RawShapeEntropyBits = totalBitsRequired,
+                ColorConstraintBits = (parameters.ColorCount > 1 && parameters.ColorSecurityLevel == SecurityLevel.Level1) ? Math.Log2(parameters.ColorCount) : 0,
+                RawColorEntropyBits = (parameters.ColorCount > 1) ? (totalBitsRequired / 2.0) * Math.Log2(parameters.ColorCount) : 0
             };
         }
 
@@ -245,6 +292,46 @@ namespace SecurityOfIdenticons
             using (SHA256 sha256 = SHA256.Create())
             {
                 return sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+            }
+        }
+
+        private void ApplyShapeConstraints(bool[] bits, int rows, int cols, SecurityLevel level)
+        {
+            if (level == SecurityLevel.Level1)
+            {
+                if (bits.Length < 2) return;
+                bool parity = false;
+                for (int i = 0; i < bits.Length - 1; i++) parity ^= bits[i];
+                bits[bits.Length - 1] = parity;
+            }
+            else if (level == SecurityLevel.Level2)
+            {
+                if (rows < 2 || cols < 2 || bits.Length < rows * cols) return;
+                
+                bool[,] matrix = new bool[rows, cols];
+                for(int r = 0; r < rows; r++) {
+                    for(int c = 0; c < cols; c++) {
+                        matrix[r, c] = bits[r * cols + c];
+                    }
+                }
+
+                for (int r = 0; r < rows - 1; r++) {
+                    bool parity = false;
+                    for (int c = 0; c < cols - 1; c++) parity ^= matrix[r, c];
+                    matrix[r, cols - 1] = parity;
+                }
+
+                for (int c = 0; c < cols; c++) {
+                    bool parity = false;
+                    for (int r = 0; r < rows - 1; r++) parity ^= matrix[r, c];
+                    matrix[rows - 1, c] = parity;
+                }
+
+                for(int r = 0; r < rows; r++) {
+                    for(int c = 0; c < cols; c++) {
+                        bits[r * cols + c] = matrix[r, c];
+                    }
+                }
             }
         }
 
@@ -270,13 +357,35 @@ namespace SecurityOfIdenticons
         public int Lightness { get; set; } = 50;
         public int MinHueDistance { get; set; } = 45;
         public int HueSpacing { get; set; } = 0;
+        public SecurityLevel ShapeSecurityLevel { get; set; } = SecurityLevel.None;
+        public SecurityLevel ColorSecurityLevel { get; set; } = SecurityLevel.None;
+        
+        private bool _safeMode;
+        public bool SafeMode 
+        { 
+            get => _safeMode;
+            set 
+            {
+                _safeMode = value;
+                if (value) 
+                {
+                    ShapeSecurityLevel = SecurityLevel.Level2;
+                    ColorSecurityLevel = SecurityLevel.Level1;
+                }
+                else
+                {
+                    ShapeSecurityLevel = SecurityLevel.None;
+                    ColorSecurityLevel = SecurityLevel.None;
+                }
+            }
+        }
 
         public IdenticonParameters()
         {
 
         }
 
-        public IdenticonParameters(int resolution, bool isSymmetric, int colorCount, int saturation, int lightness, int minHueDistance = 45, int hueSpacing = 0)
+        public IdenticonParameters(int resolution, bool isSymmetric, int colorCount, int saturation, int lightness, int minHueDistance = 45, int hueSpacing = 0, SecurityLevel shapeSecurityLevel = SecurityLevel.None, SecurityLevel colorSecurityLevel = SecurityLevel.None, bool safeMode = false)
         {
             Resolution = resolution;
             IsSymmetric = isSymmetric;
@@ -285,6 +394,9 @@ namespace SecurityOfIdenticons
             Lightness = Math.Clamp(lightness, 0, 100);
             MinHueDistance = Math.Clamp(minHueDistance, 1, 360);
             HueSpacing = Math.Clamp(hueSpacing, 0, 360);
+            ShapeSecurityLevel = shapeSecurityLevel;
+            ColorSecurityLevel = colorSecurityLevel;
+            SafeMode = safeMode;
         }
     }
 
@@ -304,6 +416,10 @@ namespace SecurityOfIdenticons
         public string HashBinary { get; set; }
         public string Identifier { get; set; }
         public List<HashBitRole> BitRoles { get; set; } = new List<HashBitRole>();
+        public int ShapeConstraintBits { get; set; }
+        public int RawShapeEntropyBits { get; set; }
+        public double ColorConstraintBits { get; set; }
+        public double RawColorEntropyBits { get; set; }
     }
 
     public class HashBitRole

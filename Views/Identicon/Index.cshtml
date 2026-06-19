@@ -176,16 +176,29 @@
                         </select>
                     </div>
 
-                    <div class="col-md-4 d-flex align-items-end">
+                    <div class="col-md-2 d-flex align-items-end">
                         <div class="form-check">
                             <input name="isSymmetric" id="symToggle" type="checkbox" checked
                                    hx-get="@Url.Action("GenerateResult", "Identicon")"
                                    hx-trigger="change"
                                    hx-target="#resultContainer"
                                    hx-include="#identiconForm"
-                                   hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked}'
+                                   hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked, "safeMode": document.getElementById("safeModeToggle") ? document.getElementById("safeModeToggle").checked : false}'
                                    class="form-check-input">
                             <label class="form-check-label fw-semibold" for="symToggle">Symmetric</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 d-flex align-items-end">
+                        <div class="form-check">
+                            <input name="safeMode" id="safeModeToggle" type="checkbox" checked
+                                   hx-get="@Url.Action("GenerateResult", "Identicon")"
+                                   hx-trigger="change"
+                                   hx-target="#resultContainer"
+                                   hx-include="#identiconForm"
+                                   hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked, "safeMode": document.getElementById("safeModeToggle") ? document.getElementById("safeModeToggle").checked : false}'
+                                   class="form-check-input">
+                            <label class="form-check-label fw-semibold" for="safeModeToggle">Safe Mode</label>
                         </div>
                     </div>
                 </div>
@@ -348,8 +361,9 @@
             const light = document.getElementById('lightSlider').value;
             const hueDist = document.getElementById('hueDistSlider').value;
             const hueSpace = document.getElementById('hueSpacingSlider').value;
+            const safeMode = document.getElementById('safeModeToggle').checked;
             
-            const url = `@Url.Action("Index", "Experiment")?resolution=${res}&colorCount=${colorCount}&isSymmetric=${isSym}&saturation=${sat}&lightness=${light}&minHueDistance=${hueDist}&hueSpacing=${hueSpace}`;
+            const url = `@Url.Action("Index", "Experiment")?resolution=${res}&colorCount=${colorCount}&isSymmetric=${isSym}&saturation=${sat}&lightness=${light}&minHueDistance=${hueDist}&hueSpacing=${hueSpace}&safeMode=${safeMode}`;
             window.location.href = url;
         }
     </script>
