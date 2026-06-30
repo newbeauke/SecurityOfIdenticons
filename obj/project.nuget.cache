@@ -1,26 +1,26 @@
 {
   "version": 2,
-  "dgSpecHash": "CQa00L+bNr0=",
+  "dgSpecHash": "pU+bgITuRbY=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj",
+  "projectFilePath": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Beau\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
-    "C:\\Users\\Beau\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.3\\microsoft.aspnetcore.openapi.10.0.3.nupkg.sha512",
-    "C:\\Users\\Beau\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512",
-    "C:\\Users\\Beau\\.nuget\\packages\\mongodb.bson\\3.8.0\\mongodb.bson.3.8.0.nupkg.sha512",
-    "C:\\Users\\Beau\\.nuget\\packages\\mongodb.driver\\3.8.0\\mongodb.driver.3.8.0.nupkg.sha512",
-    "C:\\Users\\Beau\\.nuget\\packages\\sharpcompress\\0.30.1\\sharpcompress.0.30.1.nupkg.sha512",
-    "C:\\Users\\Beau\\.nuget\\packages\\snappier\\1.0.0\\snappier.1.0.0.nupkg.sha512",
-    "C:\\Users\\Beau\\.nuget\\packages\\zstdsharp.port\\0.7.3\\zstdsharp.port.0.7.3.nupkg.sha512"
+    "C:\\Users\\beauk\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
+    "C:\\Users\\beauk\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.3\\microsoft.aspnetcore.openapi.10.0.3.nupkg.sha512",
+    "C:\\Users\\beauk\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512",
+    "C:\\Users\\beauk\\.nuget\\packages\\mongodb.bson\\3.8.0\\mongodb.bson.3.8.0.nupkg.sha512",
+    "C:\\Users\\beauk\\.nuget\\packages\\mongodb.driver\\3.8.0\\mongodb.driver.3.8.0.nupkg.sha512",
+    "C:\\Users\\beauk\\.nuget\\packages\\sharpcompress\\0.30.1\\sharpcompress.0.30.1.nupkg.sha512",
+    "C:\\Users\\beauk\\.nuget\\packages\\snappier\\1.0.0\\snappier.1.0.0.nupkg.sha512",
+    "C:\\Users\\beauk\\.nuget\\packages\\zstdsharp.port\\0.7.3\\zstdsharp.port.0.7.3.nupkg.sha512"
   ],
   "logs": [
     {
       "code": "NU1902",
       "level": "Warning",
       "message": "Package 'SharpCompress' 0.30.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-6c8g-7p36-r338",
-      "projectPath": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj",
+      "projectPath": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj",
       "warningLevel": 1,
-      "filePath": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj",
+      "filePath": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj",
       "libraryId": "SharpCompress",
       "targetGraphs": [
         "net10.0"
@@ -30,9 +30,9 @@
       "code": "NU1903",
       "level": "Warning",
       "message": "Package 'Snappier' 1.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-pggp-6c3x-2xmx",
-      "projectPath": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj",
+      "projectPath": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj",
       "warningLevel": 1,
-      "filePath": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj",
+      "filePath": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj",
       "libraryId": "Snappier",
       "targetGraphs": [
         "net10.0"

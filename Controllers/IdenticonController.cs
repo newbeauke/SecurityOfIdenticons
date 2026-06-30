@@ -13,16 +13,17 @@ namespace SecurityOfIdenticons.Controllers
         }
 
         [HttpGet]
-        public IActionResult GenerateResult(string input1, string input2, string input1Mode = "String", string input2Mode = "String", int resolution = 5, bool isSymmetric = true, int colorCount = 1, int saturation = 70, int lightness = 50, int minHueDistance = 45, int hueSpacing = 45, bool safeMode = false)
+        public IActionResult GenerateResult(string input1, string input2, string input1Mode = "String", string input2Mode = "String", int resolution = 5, bool isSymmetric = true, int colorCount = 1, int saturation = 70, int lightness = 50, int minHueDistance = 45, int hueSpacing = 45, SecurityLevel safeMode = SecurityLevel.None)
         {
+            if (string.IsNullOrEmpty(input1)) input1 = "";
+            if (string.IsNullOrEmpty(input2)) input2 = "";
+
             if (string.IsNullOrWhiteSpace(input1) && string.IsNullOrWhiteSpace(input2))
             {
                 return Content("<div class='alert alert-warning text-center'>At least one identifier cannot be empty</div>");
             }
 
-            SecurityLevel shapeSec = safeMode ? SecurityLevel.Level2 : SecurityLevel.None;
-            SecurityLevel colorSec = safeMode ? SecurityLevel.Level1 : SecurityLevel.None;
-            var parameters = new IdenticonParameters(resolution, isSymmetric, colorCount, saturation, lightness, minHueDistance, hueSpacing, shapeSec, colorSec, safeMode);
+            var parameters = new IdenticonParameters(resolution, isSymmetric, colorCount, saturation, lightness, minHueDistance, hueSpacing, safeMode);
             var generator = new IdenticonGenerator(parameters);
 
             var results = new List<IdenticonResult>();
@@ -110,13 +111,11 @@ namespace SecurityOfIdenticons.Controllers
         }
 
         [HttpGet]
-        public IActionResult MineCollisionChunk(string input1, string matchType = "Shape", double targetMatch = 90.0, int startAttempt = 1, int batchSize = 25000, int resolution = 5, bool isSymmetric = true, int colorCount = 1, int saturation = 70, int lightness = 50, int minHueDistance = 45, int hueSpacing = 45, string mineMode = "Target", bool safeMode = false)
+        public IActionResult MineCollisionChunk(string input1, string matchType = "Shape", double targetMatch = 90.0, int startAttempt = 1, int batchSize = 25000, int resolution = 5, bool isSymmetric = true, int colorCount = 1, int saturation = 70, int lightness = 50, int minHueDistance = 45, int hueSpacing = 45, string mineMode = "Target", SecurityLevel safeMode = SecurityLevel.None)
         {
-            if (string.IsNullOrWhiteSpace(input1)) return Content("<div class='text-danger fw-bold text-center'>Provide Identifier 1</div>", "text/html");
+            if (string.IsNullOrEmpty(input1)) input1 = "";
 
-            SecurityLevel shapeSec = safeMode ? SecurityLevel.Level2 : SecurityLevel.None;
-            SecurityLevel colorSec = safeMode ? SecurityLevel.Level1 : SecurityLevel.None;
-            var parameters = new IdenticonParameters(resolution, isSymmetric, colorCount, saturation, lightness, minHueDistance, hueSpacing, shapeSec, colorSec, safeMode);
+            var parameters = new IdenticonParameters(resolution, isSymmetric, colorCount, saturation, lightness, minHueDistance, hueSpacing, safeMode);
             var generator = new IdenticonGenerator(parameters);
 
             var baseResult = generator.Generate(input1);

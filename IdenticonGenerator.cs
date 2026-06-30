@@ -8,8 +8,9 @@ namespace SecurityOfIdenticons
     public enum SecurityLevel
     {
         None,
-        Level1,
-        Level2
+        OneDParity,
+        TwoDParity,
+        ExtendedHamming
     }
 
     public class IdenticonGenerator
@@ -43,10 +44,11 @@ namespace SecurityOfIdenticons
             bool[] bits = ExtractBitsFromHash(hash, totalBitsRequired);
 
             int shapeConstraintBits = 0;
-            if (parameters.ShapeSecurityLevel == SecurityLevel.Level1) shapeConstraintBits = 1;
-            else if (parameters.ShapeSecurityLevel == SecurityLevel.Level2) shapeConstraintBits = parameters.Resolution + columnsToGenerate - 1;
+            if (parameters.SafeMode == SecurityLevel.OneDParity) shapeConstraintBits = 1;
+            else if (parameters.SafeMode == SecurityLevel.TwoDParity) shapeConstraintBits = parameters.Resolution + columnsToGenerate - 1;
+            else if (parameters.SafeMode == SecurityLevel.ExtendedHamming) shapeConstraintBits = 5;
             
-            ApplyShapeConstraints(bits, parameters.Resolution, columnsToGenerate, parameters.ShapeSecurityLevel);
+            ApplyShapeConstraints(bits, parameters.Resolution, columnsToGenerate, parameters.SafeMode);
 
             int[] grid = new int[parameters.Resolution * parameters.Resolution];
 
@@ -79,11 +81,6 @@ namespace SecurityOfIdenticons
                     int hashByte = hash[24 + (index % 8)];
                     int colorVal = hashByte % parameters.ColorCount;
                     
-                    if (parameters.ColorSecurityLevel == SecurityLevel.Level1 && i == activeIndependentIndices.Count - 1 && activeIndependentIndices.Count > 1)
-                    {
-                        colorVal = (parameters.ColorCount - (sumColorIndices % parameters.ColorCount)) % parameters.ColorCount;
-                    }
-
                     sumColorIndices += colorVal;
                     independentColorMapping[index] = colorVal + 1; // 1-based index
                 }
@@ -258,7 +255,7 @@ namespace SecurityOfIdenticons
             {
                 double expectedActiveCells = totalBitsRequired / 2.0;
                 double rawExpectedColorEntropy = expectedActiveCells * Math.Log2(parameters.ColorCount);
-                double expectedColorConstraint = (parameters.ColorSecurityLevel == SecurityLevel.Level1) ? Math.Log2(parameters.ColorCount) : 0;
+                double expectedColorConstraint = 0;
                 
                 colorEntropyBits = rawExpectedColorEntropy - expectedColorConstraint;
                 entropyBits += colorEntropyBits;
@@ -267,7 +264,7 @@ namespace SecurityOfIdenticons
             return new IdenticonResult
             {
                 Identifier = identifier,
-                HashHex = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant(),
+                HashHex = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant(), 
                 HashBinary = string.Join("", hash.Select(b => Convert.ToString(b, 2).PadLeft(8, '0'))),
                 Grid = grid,
                 Colors = colors,
@@ -282,7 +279,7 @@ namespace SecurityOfIdenticons
                 BitRoles = bitRoles,
                 ShapeConstraintBits = shapeConstraintBits,
                 RawShapeEntropyBits = totalBitsRequired,
-                ColorConstraintBits = (parameters.ColorCount > 1 && parameters.ColorSecurityLevel == SecurityLevel.Level1) ? Math.Log2(parameters.ColorCount) : 0,
+                ColorConstraintBits = 0,
                 RawColorEntropyBits = (parameters.ColorCount > 1) ? (totalBitsRequired / 2.0) * Math.Log2(parameters.ColorCount) : 0
             };
         }
@@ -297,14 +294,14 @@ namespace SecurityOfIdenticons
 
         private void ApplyShapeConstraints(bool[] bits, int rows, int cols, SecurityLevel level)
         {
-            if (level == SecurityLevel.Level1)
+            if (level == SecurityLevel.OneDParity)
             {
                 if (bits.Length < 2) return;
                 bool parity = false;
                 for (int i = 0; i < bits.Length - 1; i++) parity ^= bits[i];
                 bits[bits.Length - 1] = parity;
             }
-            else if (level == SecurityLevel.Level2)
+            else if (level == SecurityLevel.TwoDParity)
             {
                 if (rows < 2 || cols < 2 || bits.Length < rows * cols) return;
                 
@@ -333,6 +330,52 @@ namespace SecurityOfIdenticons
                     }
                 }
             }
+            else if (level == SecurityLevel.ExtendedHamming)
+            {
+                if (bits.Length < 15) return;
+                
+                // We use cells 1-15 (0-indexed as 0-14 in code).
+                // Parity bits: 1 (idx 0), 2 (idx 1), 4 (idx 3), 8 (idx 7), and 15 (idx 14).
+                // Data bits: 3, 5, 6, 7, 9, 10, 11, 12, 13, 14.
+                
+                // Read the first 10 bits of the hash into our data cells
+                bool c3 = bits[0];
+                bool c5 = bits[1];
+                bool c6 = bits[2];
+                bool c7 = bits[3];
+                bool c9 = bits[4];
+                bool c10 = bits[5];
+                bool c11 = bits[6];
+                bool c12 = bits[7];
+                bool c13 = bits[8];
+                bool c14 = bits[9];
+                
+                // Calculate Overall Parity cell (Cell 15 / index 14) 
+                bool c15 = c3 ^ c5 ^ c6 ^ c9 ^ c10 ^ c12;
+                
+                // Calculate standard Hamming Parity cells
+                bool c8 = c9 ^ c10 ^ c11 ^ c12 ^ c13 ^ c14 ^ c15;
+                bool c4 = c5 ^ c6 ^ c7 ^ c12 ^ c13 ^ c14 ^ c15;
+                bool c2 = c3 ^ c6 ^ c7 ^ c10 ^ c11 ^ c14 ^ c15;
+                bool c1 = c3 ^ c5 ^ c7 ^ c9 ^ c11 ^ c13 ^ c15;
+
+                // Write everything back into the 15-bit array
+                bits[0] = c1;
+                bits[1] = c2;
+                bits[2] = c3;
+                bits[3] = c4;
+                bits[4] = c5;
+                bits[5] = c6;
+                bits[6] = c7;
+                bits[7] = c8;
+                bits[8] = c9;
+                bits[9] = c10;
+                bits[10] = c11;
+                bits[11] = c12;
+                bits[12] = c13;
+                bits[13] = c14;
+                bits[14] = c15;
+            }
         }
 
         private bool[] ExtractBitsFromHash(byte[] hash, int count)
@@ -357,35 +400,14 @@ namespace SecurityOfIdenticons
         public int Lightness { get; set; } = 50;
         public int MinHueDistance { get; set; } = 45;
         public int HueSpacing { get; set; } = 0;
-        public SecurityLevel ShapeSecurityLevel { get; set; } = SecurityLevel.None;
-        public SecurityLevel ColorSecurityLevel { get; set; } = SecurityLevel.None;
-        
-        private bool _safeMode;
-        public bool SafeMode 
-        { 
-            get => _safeMode;
-            set 
-            {
-                _safeMode = value;
-                if (value) 
-                {
-                    ShapeSecurityLevel = SecurityLevel.Level2;
-                    ColorSecurityLevel = SecurityLevel.Level1;
-                }
-                else
-                {
-                    ShapeSecurityLevel = SecurityLevel.None;
-                    ColorSecurityLevel = SecurityLevel.None;
-                }
-            }
-        }
+        public SecurityLevel SafeMode { get; set; } = SecurityLevel.None;
 
         public IdenticonParameters()
         {
 
         }
 
-        public IdenticonParameters(int resolution, bool isSymmetric, int colorCount, int saturation, int lightness, int minHueDistance = 45, int hueSpacing = 0, SecurityLevel shapeSecurityLevel = SecurityLevel.None, SecurityLevel colorSecurityLevel = SecurityLevel.None, bool safeMode = false)
+        public IdenticonParameters(int resolution, bool isSymmetric, int colorCount, int saturation, int lightness, int minHueDistance = 45, int hueSpacing = 0, SecurityLevel safeMode = SecurityLevel.None)
         {
             Resolution = resolution;
             IsSymmetric = isSymmetric;
@@ -394,8 +416,6 @@ namespace SecurityOfIdenticons
             Lightness = Math.Clamp(lightness, 0, 100);
             MinHueDistance = Math.Clamp(minHueDistance, 1, 360);
             HueSpacing = Math.Clamp(hueSpacing, 0, 360);
-            ShapeSecurityLevel = shapeSecurityLevel;
-            ColorSecurityLevel = colorSecurityLevel;
             SafeMode = safeMode;
         }
     }

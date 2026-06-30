@@ -183,23 +183,26 @@
                                    hx-trigger="change"
                                    hx-target="#resultContainer"
                                    hx-include="#identiconForm"
-                                   hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked, "safeMode": document.getElementById("safeModeToggle") ? document.getElementById("safeModeToggle").checked : false}'
+                                   hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked, "safeMode": document.getElementById("safeModeSelect") ? document.getElementById("safeModeSelect").value : "None"}'
                                    class="form-check-input">
                             <label class="form-check-label fw-semibold" for="symToggle">Symmetric</label>
                         </div>
                     </div>
 
-                    <div class="col-md-2 d-flex align-items-end">
-                        <div class="form-check">
-                            <input name="safeMode" id="safeModeToggle" type="checkbox" checked
-                                   hx-get="@Url.Action("GenerateResult", "Identicon")"
-                                   hx-trigger="change"
-                                   hx-target="#resultContainer"
-                                   hx-include="#identiconForm"
-                                   hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked, "safeMode": document.getElementById("safeModeToggle") ? document.getElementById("safeModeToggle").checked : false}'
-                                   class="form-check-input">
-                            <label class="form-check-label fw-semibold" for="safeModeToggle">Safe Mode</label>
-                        </div>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-semibold">Safe Mode</label>
+                        <select name="safeMode" id="safeModeSelect"
+                                hx-get="@Url.Action("GenerateResult", "Identicon")"
+                                hx-trigger="change"
+                                hx-target="#resultContainer"
+                                hx-include="#identiconForm"
+                                hx-vals='js:{"isSymmetric": document.getElementById("symToggle").checked, "safeMode": document.getElementById("safeModeSelect") ? document.getElementById("safeModeSelect").value : "None"}'
+                                class="form-select">
+                            <option value="None">None</option>
+                            <option value="OneDParity">1D Parity</option>
+                            <option value="TwoDParity">2D Parity</option>
+                            <option value="ExtendedHamming">Extended Hamming (Claude)</option>
+                        </select>
                     </div>
                 </div>
 
@@ -361,7 +364,7 @@
             const light = document.getElementById('lightSlider').value;
             const hueDist = document.getElementById('hueDistSlider').value;
             const hueSpace = document.getElementById('hueSpacingSlider').value;
-            const safeMode = document.getElementById('safeModeToggle').checked;
+            const safeMode = document.getElementById('safeModeSelect') ? document.getElementById('safeModeSelect').value : "None";
             
             const url = `@Url.Action("Index", "Experiment")?resolution=${res}&colorCount=${colorCount}&isSymmetric=${isSym}&saturation=${sat}&lightness=${light}&minHueDistance=${hueDist}&hueSpacing=${hueSpace}&safeMode=${safeMode}`;
             window.location.href = url;

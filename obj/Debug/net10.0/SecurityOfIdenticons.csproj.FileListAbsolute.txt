@@ -63,7 +63,6 @@ C:\Users\beauk\source\repos\ASP.NET\SecurityOfIdenticons\obj\Debug\net10.0\stati
 C:\Users\beauk\source\repos\ASP.NET\SecurityOfIdenticons\obj\Debug\net10.0\staticwebassets.development.json
 C:\Users\beauk\source\repos\ASP.NET\SecurityOfIdenticons\obj\Debug\net10.0\staticwebassets.build.endpoints.json
 C:\Users\beauk\source\repos\ASP.NET\SecurityOfIdenticons\obj\Debug\net10.0\swae.build.ex.cache
-C:\Users\beauk\source\repos\ASP.NET\SecurityOfIdenticons\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 C:\Users\beauk\source\repos\ASP.NET\SecurityOfIdenticons\obj\Debug\net10.0\Security.5F63CBDF.Up2Date
 C:\Users\beauk\source\repos\ASP.NET\SecurityOfIdenticons\obj\Debug\net10.0\SecurityOfIdenticons.dll
 C:\Users\beauk\source\repos\ASP.NET\SecurityOfIdenticons\obj\Debug\net10.0\refint\SecurityOfIdenticons.dll
@@ -78,3 +77,10 @@ C:\Users\Beau\source\repos\ASP.NET\SecurityOfIdenticons\bin\Debug\net10.0\SharpC
 C:\Users\Beau\source\repos\ASP.NET\SecurityOfIdenticons\bin\Debug\net10.0\Snappier.dll
 C:\Users\Beau\source\repos\ASP.NET\SecurityOfIdenticons\bin\Debug\net10.0\ZstdSharp.dll
 C:\Users\Beau\source\repos\ASP.NET\SecurityOfIdenticons\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
+C:\Users\beauk\source\repos\ASP.NET\SecurityOfIdenticons\bin\Debug\net10.0\DnsClient.dll
+C:\Users\beauk\source\repos\ASP.NET\SecurityOfIdenticons\bin\Debug\net10.0\MongoDB.Bson.dll
+C:\Users\beauk\source\repos\ASP.NET\SecurityOfIdenticons\bin\Debug\net10.0\MongoDB.Driver.dll
+C:\Users\beauk\source\repos\ASP.NET\SecurityOfIdenticons\bin\Debug\net10.0\SharpCompress.dll
+C:\Users\beauk\source\repos\ASP.NET\SecurityOfIdenticons\bin\Debug\net10.0\Snappier.dll
+C:\Users\beauk\source\repos\ASP.NET\SecurityOfIdenticons\bin\Debug\net10.0\ZstdSharp.dll
+C:\Users\beauk\source\repos\ASP.NET\SecurityOfIdenticons\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
