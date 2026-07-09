@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj": {}
+    "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj": {}
   },
   "projects": {
-    "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj": {
+    "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj",
+        "projectUniqueName": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj",
         "projectName": "SecurityOfIdenticons",
-        "projectPath": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj",
-        "packagesPath": "C:\\Users\\beauk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\beauk\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\obj\\",
+        "projectPath": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\SecurityOfIdenticons.csproj",
+        "packagesPath": "C:\\Users\\Beau\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Beau\\source\\repos\\ASP.NET\\SecurityOfIdenticons\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\beauk\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Beau\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
