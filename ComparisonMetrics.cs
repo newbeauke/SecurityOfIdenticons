@@ -205,12 +205,16 @@ namespace SecurityOfIdenticons
     {
         public static readonly List<ComparisonMetric> AllMetrics = new List<ComparisonMetric>
         {
-            new HammingDistanceMetric(),
+            // new HammingDistanceMetric(),
             new ShapeMetric(),
             new ShapeAndColorMetric(),
             new CogniconV1Metric()
         };
 
-        public static ComparisonMetric Get(string id) => AllMetrics.FirstOrDefault(m => m.Id == id) ?? AllMetrics.First();
+        public static ComparisonMetric Get(string id)
+        {
+            if (id == "Hamming") return new HammingDistanceMetric();
+            return AllMetrics.FirstOrDefault(m => m.Id == id) ?? AllMetrics.First();
+        }
     }
 }

@@ -128,7 +128,7 @@
                     </div>
                     <div class="col-md-auto col-6">
                         <div class="text-muted small uppercase">Raw Search Space</div>
-                        <div class="fw-bold text-muted">@(Math.Pow(2, firstResult.RawShapeEntropyBits + firstResult.RawColorEntropyBits).ToString("N0"))</div>
+                        <div class="fw-bold text-muted">@(Math.Pow(2, firstResult.RawShapeEntropyBits + firstResult.RawColorEntropyBits + firstResult.PaletteEntropyBits).ToString("N0"))</div>
                     </div>
                     <div class="col-md-auto col-6">
                         <div class="text-muted small uppercase">Safe Search Space</div>
@@ -136,11 +136,11 @@
                     </div>
                     <div class="col-md-3 col-6">
                         <div class="text-muted small uppercase">Color Mode</div>
-                        <div class="fw-bold">@(parameters.ColorCount == 0 ? "None" : parameters.ColorCount + " color" + (parameters.ColorCount > 1 ? "s" : ""))</div>
+                        <div class="fw-bold">@(parameters == null || parameters.ColorCount == 0 ? "None" : parameters.ColorCount + " color" + (parameters.ColorCount > 1 ? "s" : ""))</div>
                     </div>
                     <div class="col-md-3 col-6">
                         <div class="text-muted small uppercase">Grid Mode</div>
-                        <div class="fw-bold">@(parameters.IsSymmetric ? "Symmetric" : "Asymmetric")</div>
+                        <div class="fw-bold">@(parameters != null && parameters.IsSymmetric ? "Symmetric" : "Asymmetric")</div>
                     </div>
                 </div>
 
@@ -149,20 +149,34 @@
                     <h6 class="fw-bold small mb-2">Entropy breakdown</h6>
                     <div class="small font-mono">
                         <div class="d-flex justify-content-between mb-1">
-                            <span class="text-muted">Pattern (@firstResult.Resolution×@firstResult.Resolution @(parameters.IsSymmetric ? "symmetric" : "asymmetric")):</span>
-                            <span class="fw-bold">@firstResult.PatternEntropyBits bits</span>
+                            <span class="text-muted">Pattern (@firstResult.Resolution×@firstResult.Resolution @(parameters != null && parameters.IsSymmetric ? "symmetric" : "asymmetric")):</span>
+                            <span class="fw-bold">@(firstResult.ShapeConstraintBits > 0 ? firstResult.RawShapeEntropyBits : firstResult.PatternEntropyBits) bits</span>
                         </div>
-                        @if (parameters.ColorCount > 0)
+                        @if (parameters != null && parameters.SafeMode != SecurityLevel.None && firstResult.ShapeConstraintBits > 0)
+                        {
+                            string safeModeLabel = parameters.SafeMode switch
+                            {
+                                SecurityLevel.OneDParity => "1D Parity",
+                                SecurityLevel.TwoDParity => "2D Parity",
+                                SecurityLevel.ExtendedHamming => "Hamming",
+                                _ => parameters.SafeMode.ToString()
+                            };
+                            <div class="d-flex justify-content-between mb-1">
+                                <span class="text-muted">Safe Mode (@safeModeLabel):</span>
+                                <span class="fw-bold">-@firstResult.ShapeConstraintBits bits</span>
+                            </div>
+                        }
+                        @if (parameters != null && parameters.ColorCount > 0)
                         {
                             <div class="d-flex justify-content-between mb-1">
-                                <span class="text-muted">Palette (@firstResult.PaletteOptions options, @(parameters.MinHueDistance)° apart):</span>
+                                <span class="text-muted">Palette (@firstResult.PaletteOptions options, @(parameters!.MinHueDistance)° apart):</span>
                                 <span class="fw-bold">+@firstResult.PaletteEntropyBits.ToString("F1") bits</span>
                             </div>
                         }
-                        @if (parameters.ColorCount > 1)
+                        @if (parameters != null && parameters.ColorCount > 1)
                         {
                             <div class="d-flex justify-content-between mb-1">
-                                <span class="text-muted">Color assignment (~@(firstResult.PatternEntropyBits / 2.0) avg active cells x log₂(@parameters.ColorCount) bits/cell):</span>
+                                <span class="text-muted">Color assignment (~@(firstResult.PatternEntropyBits / 2.0) avg active cells x log₂(@parameters!.ColorCount) bits/cell):</span>
                                 <span class="fw-bold">+@firstResult.ColorEntropyBits.ToString("F1") bits</span>
                             </div>
                         }
@@ -195,7 +209,7 @@
                         @foreach(var metric in allMetrics)
                         {
                             var metricResult = metric.Compare(Model[0], Model[1]);
-                            <div class="col-md-3 mb-3 mb-md-0 @(count > 0 ? "border-start" : "")">
+                            <div class="col-md-4 mb-3 mb-md-0 @(count > 0 ? "border-start" : "")">
                                 <div class="text-muted small text-uppercase">@metric.Name</div>
                                 <div class="fw-bold fs-5" style="white-space: nowrap">@metricResult.PrimaryText</div>
                                 <div class="small text-muted">@metricResult.SecondaryText</div>
