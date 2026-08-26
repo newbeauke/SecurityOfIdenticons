@@ -34,8 +34,7 @@ namespace SecurityOfIdenticons.Services
             bool targetInLineup = random.NextDouble() > 0.5;
             int numDistractors = targetInLineup ? 4 : 5;
 
-            double closestAchievedTargetScoreDiff = double.MaxValue;
-            double recordedActualSimForPrimaryFake = 0;
+            double maxDistractorSimilarity = 0;
 
             for (int i = 0; i < numDistractors; i++)
             {
@@ -94,10 +93,10 @@ namespace SecurityOfIdenticons.Services
 
                 lineup.Add(bestCandidateForThisSlot);
 
-                // Track the primary fake's actual score to update the experiment's log
-                if (i == 0)
+                // Track the maximum similarity among all distractors in the lineup
+                if (actualSimForThisCandidate > maxDistractorSimilarity)
                 {
-                    recordedActualSimForPrimaryFake = actualSimForThisCandidate;
+                    maxDistractorSimilarity = actualSimForThisCandidate;
                 }
             }
 
@@ -112,7 +111,7 @@ namespace SecurityOfIdenticons.Services
 
             return new ExperimentTrial
             {
-                CurrentThreshold = recordedActualSimForPrimaryFake, // Use actual achieved score, not just what we "wished" for
+                CurrentThreshold = maxDistractorSimilarity, // Use true maximum similarity among distractors (closest distractor)
                 Target = target,
                 Lineup = shuffledLineup,
                 CorrectLineupIndex = correctIndex

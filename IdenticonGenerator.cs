@@ -350,14 +350,14 @@ namespace SecurityOfIdenticons
                 bool c13 = bits[8];
                 bool c14 = bits[9];
                 
-                // Calculate Overall Parity cell (Cell 15 / index 14) 
-                bool c15 = c3 ^ c5 ^ c6 ^ c9 ^ c10 ^ c12;
-                
-                // Calculate standard Hamming Parity cells
-                bool c8 = c9 ^ c10 ^ c11 ^ c12 ^ c13 ^ c14 ^ c15;
-                bool c4 = c5 ^ c6 ^ c7 ^ c12 ^ c13 ^ c14 ^ c15;
-                bool c2 = c3 ^ c6 ^ c7 ^ c10 ^ c11 ^ c14 ^ c15;
-                bool c1 = c3 ^ c5 ^ c7 ^ c9 ^ c11 ^ c13 ^ c15;
+                // Calculate standard Hamming Parity cells (positions 1, 2, 4, 8)
+                bool c1 = c3 ^ c5 ^ c7 ^ c9 ^ c11 ^ c13;
+                bool c2 = c3 ^ c6 ^ c7 ^ c10 ^ c11 ^ c14;
+                bool c4 = c5 ^ c6 ^ c7 ^ c12 ^ c13 ^ c14;
+                bool c8 = c9 ^ c10 ^ c11 ^ c12 ^ c13 ^ c14;
+
+                // Calculate Overall Parity cell (Cell 15 / index 14) to enforce even parity across all 15 cells
+                bool c15 = c1 ^ c2 ^ c3 ^ c4 ^ c5 ^ c6 ^ c7 ^ c8 ^ c9 ^ c10 ^ c11 ^ c12 ^ c13 ^ c14;
 
                 // Write everything back into the 15-bit array
                 bits[0] = c1;

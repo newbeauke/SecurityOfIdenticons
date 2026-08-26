@@ -155,8 +155,12 @@ namespace SecurityOfIdenticons
                         {
                             var hsl1 = ParseHsl(c1);
                             var hsl2 = ParseHsl(c2);
-                            double dist = HslEuclideanDistance(hsl1, hsl2);
-                            penalty += Math.Min(0.5, dist * 0.5); // Cap color difference penalty at 0.5
+
+                            // Saturation and lightness are currently not taken into account for the color distance because they will always be the same for both identicons
+                            double h1 = hsl1.h / 360.0;
+                            double h2 = hsl2.h / 360.0;
+                            double colorPenalty = 0.5 - Math.Abs(Math.Abs(h1 - h2) - 0.5);
+                            penalty += colorPenalty;
                         }
                     }
                 }
@@ -183,21 +187,6 @@ namespace SecurityOfIdenticons
             double.TryParse(parts[1].Replace("%", "").Trim(), System.Globalization.CultureInfo.InvariantCulture, out double s);
             double.TryParse(parts[2].Replace("%", "").Trim(), System.Globalization.CultureInfo.InvariantCulture, out double l);
             return (h, s, l);
-        }
-
-        private double HslEuclideanDistance((double h, double s, double l) c1, (double h, double s, double l) c2)
-        {
-            double dh = Math.Abs(c1.h - c2.h);
-            if (dh > 180) dh = 360 - dh;
-
-            // Scale hue difference logically (0-100 instead of 0-180 for weight balance)
-            dh = (dh / 180.0) * 100.0;
-            double ds = Math.Abs(c1.s - c2.s);
-            double dl = Math.Abs(c1.l - c2.l);
-
-            double dist = Math.Sqrt(dh * dh + ds * ds + dl * dl);
-            double maxDist = 173.2; // Math.Sqrt(100^2 + 100^2 + 100^2)
-            return dist / maxDist;
         }
     }
 
