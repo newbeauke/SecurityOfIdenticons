@@ -54,8 +54,15 @@
             </div>
 
             <!-- Distraction Phase -->
+            @{
+                var ops = new[] { "+", "-", "x", "/" };
+                var rnd = new Random();
+                int mathA = rnd.Next(1, 10);
+                int mathB = rnd.Next(1, 10);
+                string mathOp = ops[rnd.Next(ops.Length)];
+            }
             <div id="distraction-phase" style="display: none;" class="my-5 py-5">
-                <h4>What is 4 + 7?</h4>
+                <h4 id="distraction-question">What is @mathA @mathOp @mathB?</h4>
                 <p class="text-muted">Wait for it...</p>
             </div>
 
@@ -138,6 +145,15 @@
         var btnNext = document.getElementById('btn-next');
         if (btnNext) {
             btnNext.addEventListener('click', function () {
+                var ops = ['+', '-', 'x', '/'];
+                var a = Math.floor(Math.random() * 9) + 1;
+                var b = Math.floor(Math.random() * 9) + 1;
+                var op = ops[Math.floor(Math.random() * ops.length)];
+                var questionElem = document.getElementById('distraction-question');
+                if (questionElem) {
+                    questionElem.textContent = 'What is ' + a + ' ' + op + ' ' + b + '?';
+                }
+
                 document.getElementById('target-phase').style.display = 'none';
                 document.getElementById('distraction-phase').style.display = 'block';
 
